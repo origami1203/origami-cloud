@@ -1,7 +1,9 @@
 package org.origami.common.mybatis.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Getter;
@@ -23,6 +25,11 @@ import java.util.Date;
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 8464581702560616820L;
     
+    /**
+     * 主键
+     */
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
     /**
      * 创建时间
      */
