@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>origami-common</artifactId>
+        <artifactId>origami-upm</artifactId>
         <groupId>org.origami</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>origami-common-core</artifactId>
+    <artifactId>origami-upm-api</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -17,17 +17,10 @@
     </properties>
 
     <dependencies>
-        <!--servlet-->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>org.origami</groupId>
+            <artifactId>origami-common-mybatis</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>
