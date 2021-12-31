@@ -1,0 +1,14 @@
+server:
+  port: 10080
+
+spring:
+  application:
+    name: @artifactId@
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
