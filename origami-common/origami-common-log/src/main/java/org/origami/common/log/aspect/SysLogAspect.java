@@ -10,9 +10,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.origami.common.log.service.SysLogService;
 import org.origami.common.log.utils.SysLogUtil;
 import org.origami.upm.api.entity.SysLog;
-import org.origami.upm.api.service.SysLogService;
 import org.springframework.util.StopWatch;
 
 import java.lang.reflect.Method;
@@ -27,7 +27,6 @@ import java.lang.reflect.Method;
 @Aspect
 @RequiredArgsConstructor
 public class SysLogAspect {
-    
     private final SysLogService sysLogService;
     
     @Pointcut("@annotation(org.origami.common.log.annotation.SysLog)")
@@ -38,6 +37,7 @@ public class SysLogAspect {
     private void classPointcut() {
     }
     
+    // TODO yml文件动态配置需要日志的范围
     @Around(value = "methodPointcut() || classPointcut()")
     public Object around(ProceedingJoinPoint pjp) {
         
@@ -65,7 +65,8 @@ public class SysLogAspect {
         } finally {
             stopWatch.stop();
             sysLog.setTime(stopWatch.getTotalTimeMillis());
-            sysLogService.save(sysLog);
+            // 接口，子类继承后
+            sysLogService.handle(sysLog);
         }
         
         return result;
