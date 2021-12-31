@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 public @interface SysLog {
     
     /**
-     * 操作名称
+     * 方法描述
      * @return string
      */
     String value() default "";
