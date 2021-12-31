@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author origami1203
@@ -24,7 +23,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 8464581702560616820L;
-    
+
     /**
      * 主键
      */
@@ -54,11 +53,11 @@ public class BaseEntity implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Boolean deleted;
-    
+    private Boolean deleted = Boolean.FALSE;
+
     /**
      * 乐观锁
      */
     @Version
-    private Long version;
+    private Long version = 0L;
 }
