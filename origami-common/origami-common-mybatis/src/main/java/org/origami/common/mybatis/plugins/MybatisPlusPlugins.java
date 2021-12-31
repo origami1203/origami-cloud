@@ -14,15 +14,14 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0.0
  * @date 2021-12-29 19:30
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class MybatisPlusPlugins {
-    
+
+    @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        // 分页插件m,使用mysql，防止每次都去查询
-        PaginationInnerInterceptor paginationInnerInterceptor =
-                new PaginationInnerInterceptor(DbType.MYSQL);
-        mybatisPlusInterceptor.addInnerInterceptor(paginationInnerInterceptor);
+        // 分页插件使用mysql，防止每次都去查询
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         // 乐观锁插件
         mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return mybatisPlusInterceptor;
