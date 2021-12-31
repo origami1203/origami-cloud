@@ -11,11 +11,13 @@
     <packaging>pom</packaging>
 
     <modules>
-<!--        <module>origami-auth</module>-->
+        <!--        <module>origami-auth</module>-->
         <module>origami-common</module>
     </modules>
 
     <properties>
+        <origami-cloud.version>0.0.1-SNAPSHOT</origami-cloud.version>
+
         <spring-boot.version>2.5.4</spring-boot.version>
         <spring-cloud.version>2020.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
@@ -32,18 +34,18 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
     </properties>
 
-     <dependencies>
-         <dependency>
-             <groupId>com.google.guava</groupId>
-             <artifactId>guava</artifactId>
-             <version>${guava.version}</version>
-         </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
 
-         <dependency>
-             <groupId>cn.hutool</groupId>
-             <artifactId>hutool-all</artifactId>
-             <version>${hutool.version}</version>
-         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
 
         <!--bootstrap 启动器-->
         <dependency>
@@ -104,12 +106,14 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--mysql-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
 
+            <!--swagger-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
@@ -126,6 +130,25 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!--内部版本管理-->
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-common-core</artifactId>
+                <version>${origami-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-common-log</artifactId>
+                <version>${origami-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-common-mybatis</artifactId>
+                <version>${origami-cloud.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

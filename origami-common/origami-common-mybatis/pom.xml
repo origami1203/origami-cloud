@@ -30,10 +30,9 @@
          </dependency>
 
          <dependency>
-             <groupId>org.springframework.security</groupId>
-             <artifactId>spring-security-core</artifactId>
+             <groupId>org.origami</groupId>
+             <artifactId>origami-common-core</artifactId>
          </dependency>
-
 
      </dependencies>
 

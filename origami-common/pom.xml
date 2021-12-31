@@ -16,7 +16,7 @@
     </modules>
 
     <artifactId>origami-common</artifactId>
-    <description>公共模块父依赖</description>
+    <description>公共模块聚合</description>
 
 
     <properties>
