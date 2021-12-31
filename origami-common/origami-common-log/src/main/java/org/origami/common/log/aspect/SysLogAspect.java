@@ -1,16 +1,21 @@
 package org.origami.common.log.aspect;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.origami.common.log.utils.SysLogUtil;
 import org.origami.upm.api.entity.SysLog;
 import org.origami.upm.api.service.SysLogService;
 import org.springframework.util.StopWatch;
+
+import java.lang.reflect.Method;
 
 /**
  * 系统日志切面
@@ -22,32 +27,38 @@ import org.springframework.util.StopWatch;
 @Aspect
 @RequiredArgsConstructor
 public class SysLogAspect {
-
+    
     private final SysLogService sysLogService;
-
-
-    @Pointcut("execution(* org.origami..*.controller.*(..))")
-    public void controllerPointcut() {
+    
+    @Pointcut("@annotation(org.origami.common.log.annotation.SysLog)")
+    private void methodPointcut() {
     }
-
-    // TODO 若@SysLog的方法描述未填写,尝试从@ApiOperation中获取
-    @Around(value = "@annotation(sysLogEnum)")
-    public Object around(ProceedingJoinPoint joinPoint, org.origami.common.log.annotation.SysLog sysLogEnum) {
-        String className = joinPoint.getTarget().getClass().getName();
-        String methodName = joinPoint.getSignature().getName();
-        log.debug("[类名]:{},[方法]:{}被调用", className, methodName);
-
+    
+    @Pointcut("@within(org.origami.common.log.annotation.SysLog)")
+    private void classPointcut() {
+    }
+    
+    @Around(value = "methodPointcut() || classPointcut()")
+    public Object around(ProceedingJoinPoint pjp) {
+        
+        MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
+        Method method = methodSignature.getMethod();
+        
+        log.debug("[class]:{}方法被调用", method.toString());
+        
+        
         SysLog sysLog = SysLogUtil.getLogFromRequest();
-        sysLog.setMethod(className + "#" + methodName);
-        sysLog.setMethodDesc(sysLogEnum.value());
-        sysLog.setParams(JSON.toJSONString(joinPoint.getArgs()));
+        sysLog.setMethodDesc(getMethodDesc(method));
+        sysLog.setMethod(method.toString());
+        sysLog.setParams(JSON.toJSONString(pjp.getArgs()));
         sysLog.setWithExceptions(false);
-
+        
+        
         StopWatch stopWatch = new StopWatch();
         Object result = null;
         stopWatch.start();
         try {
-            result = joinPoint.proceed();
+            result = pjp.proceed();
         } catch (Throwable e) {
             sysLog.setWithExceptions(true);
             sysLog.setExceptionMsg(e.getMessage());
@@ -56,8 +67,44 @@ public class SysLogAspect {
             sysLog.setTime(stopWatch.getTotalTimeMillis());
             sysLogService.save(sysLog);
         }
-
+        
         return result;
     }
-
+    
+    /**
+     * 获取被执行方法的方法描述
+     *
+     * @param method 被调用的方法
+     * @return 描述
+     */
+    private String getMethodDesc(Method method) {
+        String desc = method.getName();
+        
+        if (method.isAnnotationPresent(org.origami.common.log.annotation.SysLog.class)) {
+            org.origami.common.log.annotation.SysLog sysLogAnnotation =
+                    method.getAnnotation(org.origami.common.log.annotation.SysLog.class);
+            
+            
+            if (!Strings.isNullOrEmpty(sysLogAnnotation.value())) {
+                desc = sysLogAnnotation.value();
+                return desc;
+            }
+        }
+        if (!Strings.isNullOrEmpty(getApiOperationValue(method))) {
+            desc = getApiOperationValue(method);
+            return desc;
+        }
+        return desc;
+    }
+    
+    private String getApiOperationValue(Method method) {
+        String desc = null;
+        if (method.isAnnotationPresent(ApiOperation.class)) {
+            ApiOperation annotation = method.getAnnotation(ApiOperation.class);
+            desc = annotation.value();
+        }
+        return desc;
+    }
+    
+    
 }
