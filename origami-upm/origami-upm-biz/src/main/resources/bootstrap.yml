@@ -3,12 +3,24 @@ server:
 
 spring:
   application:
-    name: @artifactId@
+    name: origami-upm
 
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        file-extension: yml
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 192.168.2.128:8847
+#      config:
+#        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#        namespace: d12f0770-ceaa-4215-9355-63676d1abeee
+#        file-extension: yml
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.2.129:8337/system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: root
+
+
+logging:
+  level:
+    org.origami: debug
