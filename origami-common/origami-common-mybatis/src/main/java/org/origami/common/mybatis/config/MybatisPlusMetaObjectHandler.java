@@ -3,6 +3,7 @@ package org.origami.common.mybatis.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
+import org.origami.common.core.utils.UserContextUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -24,28 +25,16 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         
         strictInsertFill(metaObject, "createDate", LocalDateTime.class, now);
         strictInsertFill(metaObject, "updateDate", LocalDateTime.class, now);
-        strictInsertFill(metaObject, "createBy", String.class, getUserName());
-        strictInsertFill(metaObject, "updateBy", String.class, getUserName());
+        strictInsertFill(metaObject, "createBy", String.class, UserContextUtil.getUsername());
+        strictInsertFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
     }
     
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.debug("mybatis-plus自动填充开始...");
+        log.debug("mybatis-plus自动更新字段开始...");
         
         strictInsertFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
-        strictInsertFill(metaObject, "updateBy", String.class, getUserName());
+        strictInsertFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
     }
     
-    /**
-     * 获取当前线程已认证用户的名字
-     *
-     * @return 用户名，未认证返回null
-     */
-    private String getUserName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (Objects.nonNull(authentication)) {
-            return authentication.getName();
-        }
-        return null;
-    }
 }
