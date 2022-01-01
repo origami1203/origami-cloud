@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 8464581702560616820L;
-
+    
     /**
      * 主键
      */
@@ -53,11 +53,11 @@ public class BaseEntity implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Boolean deleted = Boolean.FALSE;
-
+    private Boolean deleted;
+    
     /**
      * 乐观锁
      */
     @Version
-    private Long version = 0L;
+    private Long version;
 }
