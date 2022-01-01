@@ -223,4 +223,11 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>localRepository</id>
+            <url>file:D:/Develop/maven_repo</url>
+        </repository>
+    </distributionManagement>
+
 </project>

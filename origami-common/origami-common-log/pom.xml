@@ -35,10 +35,11 @@
              <artifactId>spring-web</artifactId>
          </dependency>
 
-         <dependency>
-             <groupId>org.origami</groupId>
-             <artifactId>origami-upm-api</artifactId>
-         </dependency>
+
+         <!--<dependency>-->
+         <!--    <groupId>org.origami</groupId>-->
+         <!--    <artifactId>origami-upm-api</artifactId>-->
+         <!--</dependency>-->
 
          <dependency>
              <groupId>org.origami</groupId>
@@ -47,5 +48,12 @@
 
 
      </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>localRepository</id>
+            <url>file:D:/Develop/maven_repo</url>
+        </repository>
+    </distributionManagement>
 
 </project>
