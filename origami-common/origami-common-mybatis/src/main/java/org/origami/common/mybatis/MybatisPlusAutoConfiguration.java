@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
  * @date 2021-12-29 19:58
  */
 @Import(MybatisPlusPlugins.class)
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class MybatisPlusAutoConfiguration {
     
     @Bean
