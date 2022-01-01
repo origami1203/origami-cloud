@@ -10,9 +10,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.origami.common.log.service.SysLogService;
-import org.origami.common.log.utils.SysLogUtil;
-import org.origami.upm.api.entity.SysLog;
+import org.origami.common.core.utils.UserContextUtil;
+import org.origami.common.log.base.SysLogInfo;
+import org.origami.common.log.service.SysLogInfoService;
+import org.origami.common.log.utils.SysLogInfoUtil;
 import org.springframework.util.StopWatch;
 
 import java.lang.reflect.Method;
@@ -27,7 +28,7 @@ import java.lang.reflect.Method;
 @Aspect
 @RequiredArgsConstructor
 public class SysLogAspect {
-    private final SysLogService sysLogService;
+    private final SysLogInfoService sysLogInfoService;
     
     @Pointcut("@annotation(org.origami.common.log.annotation.SysLog)")
     private void methodPointcut() {
@@ -47,11 +48,13 @@ public class SysLogAspect {
         log.debug("[class]:{}方法被调用", method.toString());
         
         
-        SysLog sysLog = SysLogUtil.getLogFromRequest();
-        sysLog.setMethodDesc(getMethodDesc(method));
-        sysLog.setMethod(method.toString());
-        sysLog.setParams(JSON.toJSONString(pjp.getArgs()));
-        sysLog.setWithExceptions(false);
+        SysLogInfo sysLogInfo = SysLogInfoUtil.getLogInfoFromServletRequest();
+        sysLogInfo.setOperatorId(UserContextUtil.getUserId())
+                  .setOperatorName(UserContextUtil.getUsername())
+                  .setMethodDesc(getMethodDesc(method))
+                  .setMethod(method.toString())
+                  .setParams(JSON.toJSONString(pjp.getArgs()))
+                  .setWithExceptions(false);
         
         
         StopWatch stopWatch = new StopWatch();
@@ -60,13 +63,14 @@ public class SysLogAspect {
         try {
             result = pjp.proceed();
         } catch (Throwable e) {
-            sysLog.setWithExceptions(true);
-            sysLog.setExceptionMsg(e.getMessage());
+            sysLogInfo.setWithExceptions(true);
+            sysLogInfo.setExceptionMsg(e.getMessage());
         } finally {
             stopWatch.stop();
-            sysLog.setTime(stopWatch.getTotalTimeMillis());
+            sysLogInfo.setTimeConsumed(stopWatch.getTotalTimeMillis())
+                      .setReturnValue(JSON.toJSONString(result));
             // 接口，子类继承后
-            sysLogService.handle(sysLog);
+            sysLogInfoService.handle(sysLogInfo);
         }
         
         return result;
