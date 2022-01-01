@@ -1,8 +1,7 @@
 package org.origami.common.log;
 
 import org.origami.common.log.aspect.SysLogAspect;
-import org.origami.common.log.service.SysLogService;
-import org.origami.common.log.service.impl.DefaultSysLogServiceImpl;
+import org.origami.common.log.service.SysLogInfoService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,13 +19,13 @@ import org.springframework.context.annotation.Configuration;
 public class SysLogAutoConfiguration {
     
     @Bean
-    public SysLogAspect sysLogAspect(SysLogService sysLogService) {
-        return new SysLogAspect(sysLogService);
+    public SysLogAspect sysLogAspect(SysLogInfoService sysLogInfoService) {
+        return new SysLogAspect(sysLogInfoService);
     }
     
     @Bean
-    @ConditionalOnMissingBean(SysLogService.class)
-    public SysLogService sysLogService() {
-        return new DefaultSysLogServiceImpl();
+    @ConditionalOnMissingBean(SysLogInfoService.class)
+    public SysLogInfoService sysLogService() {
+        return log -> {};
     }
 }
