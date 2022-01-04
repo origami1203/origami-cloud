@@ -11,9 +11,11 @@ import java.util.Optional;
  * @author origami
  * @date 2022/1/3 12:57
  */
-public class UserAuditor implements AuditorAware<String> {
+public class UserAuditorAware implements AuditorAware<String> {
+    
     @Override
     public Optional<String> getCurrentAuditor() {
         return Optional.ofNullable(UserContextUtil.getUsername());
     }
+    
 }
