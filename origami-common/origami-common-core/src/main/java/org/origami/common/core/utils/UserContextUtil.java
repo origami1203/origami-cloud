@@ -17,7 +17,7 @@ public class UserContextUtil {
     
     public String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return Objects.nonNull(authentication) ? authentication.getName() : "null";
+        return Objects.nonNull(authentication) ? authentication.getName() : "anonymous";
     }
     
     // TODO
