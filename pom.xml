@@ -120,13 +120,6 @@
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-            <!--fastjson-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.78</version>
-            </dependency>
-
 
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -246,7 +239,7 @@
     <distributionManagement>
         <repository>
             <id>localRepository</id>
-            <url>file:D:/Develop/maven_repo</url>
+            <url>file:D:/delevop/maven_repo</url>
         </repository>
     </distributionManagement>
 

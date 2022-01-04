@@ -1,6 +1,5 @@
 package org.origami.common.log.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.origami.common.core.utils.JacksonUtil;
 import org.origami.common.core.utils.UserContextUtil;
 import org.origami.common.log.base.SysLogInfo;
 import org.origami.common.log.service.SysLogInfoService;
@@ -53,7 +53,7 @@ public class SysLogAspect {
                   .setOperatorName(UserContextUtil.getUsername())
                   .setMethodDesc(getMethodDesc(method))
                   .setMethod(method.toString())
-                  .setParams(JSON.toJSONString(pjp.getArgs()))
+                  .setParams(JacksonUtil.toJson(pjp.getArgs()))
                   .setWithExceptions(false);
         
         
@@ -68,7 +68,7 @@ public class SysLogAspect {
         } finally {
             stopWatch.stop();
             sysLogInfo.setTimeConsumed(stopWatch.getTotalTimeMillis())
-                      .setReturnValue(JSON.toJSONString(result));
+                      .setReturnValue(JacksonUtil.toJson(result));
             // 接口，子类继承后
             sysLogInfoService.handle(sysLogInfo);
         }
