@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * @author origami1203
  * @date 2021/12/29 18:32
- * 配置用于自动填充{@link org.origami.common.mybatis.base.BaseEntity}中的数据
+ * 配置用于自动填充{@link org.origami.common.core.base.BaseEntity}中的数据
  */
 @Slf4j
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {

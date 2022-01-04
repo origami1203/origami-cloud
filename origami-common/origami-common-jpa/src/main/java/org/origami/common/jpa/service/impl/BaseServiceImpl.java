@@ -2,15 +2,10 @@ package org.origami.common.jpa.service.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.origami.common.jpa.entity.BaseEntity;
+import org.origami.common.core.base.BaseEntity;
 import org.origami.common.jpa.repository.BaseRepository;
 import org.origami.common.jpa.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  * @author origami
