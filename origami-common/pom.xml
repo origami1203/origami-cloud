@@ -13,6 +13,7 @@
         <module>origami-common-mybatis</module>
         <module>origami-common-log</module>
         <module>origami-common-core</module>
+        <module>origami-common-jpa</module>
     </modules>
 
     <artifactId>origami-common</artifactId>
