@@ -1,10 +1,11 @@
-package org.origami.common.jpa.condition;
+package org.origami.common.jpa.condition.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.origami.common.jpa.condition.Condition;
 import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;

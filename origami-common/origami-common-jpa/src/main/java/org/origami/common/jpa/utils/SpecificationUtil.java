@@ -4,7 +4,6 @@ import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
 import lombok.experimental.UtilityClass;
 import org.origami.common.jpa.condition.Condition;
-import org.origami.common.jpa.condition.PageQueryCondition;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Map;
