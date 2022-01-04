@@ -1,7 +1,7 @@
 package org.origami.common.jpa;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.origami.common.jpa.config.UserAuditor;
+import org.origami.common.jpa.config.UserAuditorAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +24,8 @@ public class SpringDataJpaAutoConfiguration {
     private EntityManager entityManager;
     
     @Bean
-    public UserAuditor userAuditor() {
-        return new UserAuditor();
+    public UserAuditorAware userAuditorAware() {
+        return new UserAuditorAware();
     }
     
     @Bean
