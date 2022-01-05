@@ -1,8 +1,8 @@
 package org.origami.common.jpa.repository;
 
-import org.origami.common.core.base.BaseEntity;
 import org.origami.common.jpa.condition.impl.PageQueryCondition;
 import org.origami.common.jpa.condition.impl.QueryCondition;
+import org.origami.common.jpa.entity.BaseEntity;
 import org.origami.common.jpa.utils.SpecificationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.origami.common.mybatis.condition.impl.PageQueryCondition;
 import org.origami.common.mybatis.condition.impl.QueryCondition;
+import org.origami.common.mybatis.entity.BaseEntity;
 import org.origami.common.mybatis.utils.WrapperUtil;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author origami
  * @date 2022/1/3 17:00
  */
-public interface BaseService<T> extends IService<T> {
+public interface BaseService<T extends BaseEntity> extends IService<T> {
     
     /**
      * 条件查询列表

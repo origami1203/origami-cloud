@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.origami.common.mybatis.base.BaseEntity;
+import org.origami.common.mybatis.entity.BaseEntity;
 
 /**
  * 系统操作日志
