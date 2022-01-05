@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import nonapi.io.github.classgraph.json.Id;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,6 +19,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
@@ -83,7 +83,7 @@ public abstract class BaseEntity {
     @ApiModelProperty(value = "逻辑删除")
     @Column(name = "is_deleted", columnDefinition = "tinyint default 0 comment '逻辑删除'")
     protected Boolean deleted;
-    
+
     /**
      * 乐观锁
      */
