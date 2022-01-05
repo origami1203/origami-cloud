@@ -33,7 +33,7 @@ public class QueryCondition<T> implements Condition<T> {
     @Override
     public Map<String, Object> getConditionMap() {
         return condition == null ? Collections.emptyMap()
-                                 : BeanUtil.beanToMap(condition, false, false);
+                                 : BeanUtil.beanToMap(condition, false, true);
     }
     
     public Sort getSort() {
