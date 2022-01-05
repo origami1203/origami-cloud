@@ -1,6 +1,7 @@
 package org.origami.common.mybatis.condition.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -34,8 +35,8 @@ public class QueryCondition<T> implements Condition<T>, Serializable {
     @Override
     public Map<String, Object> getConditionMap() {
         return this.condition == null ? Collections.emptyMap() : BeanUtil.beanToMap(condition,
-                                                                                    false,
-                                                                                    false);
+                                                                                    true,
+                                                                                    true);
     }
     
     public List<OrderItem> getOrderList() {
@@ -44,11 +45,8 @@ public class QueryCondition<T> implements Condition<T>, Serializable {
         }
         List<OrderItem> orderItemList = Lists.newArrayList();
         orders.forEach((fieldName, direction) -> {
-            boolean asc = true;
-            if (Direction.DESC.equals(direction)) {
-                asc = false;
-            }
-            orderItemList.add(new OrderItem(fieldName, asc));
+            boolean asc = !Direction.DESC.equals(direction);
+            orderItemList.add(new OrderItem(StrUtil.toUnderlineCase(fieldName), asc));
         });
         
         return orderItemList;
