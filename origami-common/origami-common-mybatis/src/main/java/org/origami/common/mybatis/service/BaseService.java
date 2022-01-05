@@ -3,7 +3,6 @@ package org.origami.common.mybatis.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.google.errorprone.annotations.Var;
 import org.origami.common.mybatis.condition.impl.PageQueryCondition;
 import org.origami.common.mybatis.condition.impl.QueryCondition;
 import org.origami.common.mybatis.utils.WrapperUtil;
@@ -39,7 +38,6 @@ public interface BaseService<T> extends IService<T> {
     default IPage<T> page(PageQueryCondition<?> condition) {
         Page<T> page = new Page<>(condition.getPageNum(),
                                              condition.getPageSize());
-        page.setOrders(condition.getOrderList());
         return getBaseMapper().selectPage(page, WrapperUtil.getWrapper(condition));
     }
     
