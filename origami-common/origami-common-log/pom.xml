@@ -36,11 +36,6 @@
          </dependency>
 
 
-         <!--<dependency>-->
-         <!--    <groupId>org.origami</groupId>-->
-         <!--    <artifactId>origami-upm-api</artifactId>-->
-         <!--</dependency>-->
-
          <dependency>
              <groupId>org.origami</groupId>
              <artifactId>origami-common-core</artifactId>
