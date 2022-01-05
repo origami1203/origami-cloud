@@ -23,9 +23,8 @@ public class WrapperUtil {
                            Map<String, Object> conditionMap = s.getConditionMap();
                            QueryWrapper queryWrapper = new QueryWrapper();
                            conditionMap.forEach((fieldName, obj) -> {
-                
                                if (obj instanceof String) {
-                                   queryWrapper.likeLeft(fieldName, obj.toString());
+                                   queryWrapper.likeRight(fieldName, obj.toString());
                                } else {
                                    queryWrapper.eq(fieldName, obj);
                                }
