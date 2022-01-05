@@ -1,7 +1,9 @@
 package org.origami.common.mybatis.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.google.errorprone.annotations.Var;
 import org.origami.common.mybatis.condition.impl.PageQueryCondition;
 import org.origami.common.mybatis.condition.impl.QueryCondition;
 import org.origami.common.mybatis.utils.WrapperUtil;
@@ -16,12 +18,38 @@ import java.util.List;
  */
 public interface BaseService<T> extends IService<T> {
     
-    @SuppressWarnings("rawtypes")
+    /**
+     * 条件查询列表
+     *
+     * @param condition
+     * @return
+     */
+    @SuppressWarnings("unchecked")
     default List<T> list(QueryCondition<?> condition) {
-        return getBaseMapper().selectList(WrapperUtil.getWrapper(condition.getParams()));
+        return getBaseMapper().selectList(WrapperUtil.getWrapper(condition));
     }
     
-    IPage<T> page(PageQueryCondition<?> condition);
+    /**
+     * 条件查询分页
+     *
+     * @param condition
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    default IPage<T> page(PageQueryCondition<?> condition) {
+        Page<T> page = new Page<>(condition.getPageNum(),
+                                             condition.getPageSize());
+        page.setOrders(condition.getOrderList());
+        return getBaseMapper().selectPage(page, WrapperUtil.getWrapper(condition));
+    }
     
-    long count(QueryCondition<?> condition);
+    /**
+     * 条件查询计数
+     *
+     * @param condition
+     * @return
+     */
+    default long count(QueryCondition<?> condition) {
+        return getBaseMapper().selectCount(WrapperUtil.getWrapper(condition));
+    }
 }

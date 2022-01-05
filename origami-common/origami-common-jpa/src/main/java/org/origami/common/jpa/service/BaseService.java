@@ -16,7 +16,6 @@ import java.util.List;
  * @author origami
  * @date 2022/1/1 21:06
  */
-@SuppressWarnings("unchecked")
 public interface BaseService<T extends BaseEntity> {
     
     /**
