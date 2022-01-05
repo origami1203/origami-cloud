@@ -45,7 +45,7 @@ public class PageQueryCondition<T> extends QueryCondition<T> {
             throw new IllegalArgumentException("页码必须大于等于1");
         }
         
-        this.pageNum = pageNum - 1;
+        this.pageNum = pageNum;
         
         return this;
     }
