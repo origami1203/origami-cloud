@@ -1,13 +1,17 @@
 package org.origami.common.mybatis.condition.impl;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.origami.common.mybatis.condition.Condition;
+import org.origami.common.core.condition.Condition;
 import org.origami.common.mybatis.enums.Direction;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,15 +25,32 @@ public class QueryCondition<T> implements Condition<T>, Serializable {
     
     
     @ApiModelProperty(value = "查询条件，不为null的字段将使用and组合查询")
-    private T condition;
+    protected T condition;
     
-    @JsonIgnore
-    private Map<String, Object> params;
+    @ApiModelProperty(value = "排序")
+    protected Map<String, Direction> orders = Maps.newLinkedHashMap();
     
-    private Map<String, Direction> orders = Maps.newLinkedHashMap();
     
     @Override
-    public T getConditionEntity() {
-        return condition;
+    public Map<String, Object> getConditionMap() {
+        return this.condition == null ? Collections.emptyMap() : BeanUtil.beanToMap(condition,
+                                                                                    false,
+                                                                                    false);
+    }
+    
+    public List<OrderItem> getOrderList() {
+        if (orders.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<OrderItem> orderItemList = Lists.newArrayList();
+        orders.forEach((fieldName, direction) -> {
+            boolean asc = true;
+            if (Direction.DESC.equals(direction)) {
+                asc = false;
+            }
+            orderItemList.add(new OrderItem(fieldName, asc));
+        });
+        
+        return orderItemList;
     }
 }

@@ -1,15 +1,9 @@
 package org.origami.common.mybatis.condition.impl;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.origami.common.mybatis.condition.Condition;
-import org.origami.common.mybatis.enums.Direction;
-
-import java.io.Serializable;
-import java.util.Map;
 
 /**
  * 分页条件查询的复合条件
@@ -19,7 +13,8 @@ import java.util.Map;
  */
 @Data
 @Accessors(chain = true)
-public class PageQueryCondition<T> implements Condition<T>, Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class PageQueryCondition<T> extends QueryCondition<T> {
     
     private static final int DEFAULT_PAGE_SIZE = 10;
     
@@ -33,21 +28,6 @@ public class PageQueryCondition<T> implements Condition<T>, Serializable {
      */
     @ApiModelProperty(value = "每页数量")
     private Integer pageSize;
-    /**
-     * 查询条件
-     */
-    @ApiModelProperty(value = "查询条件，不为null的字段将使用and组合查询")
-    private T condition;
-    
-    @JsonIgnore
-    private Map<String, Object> params;
-    
-    private Map<String, Direction> orders = Maps.newLinkedHashMap();
-    
-    @Override
-    public T getConditionEntity() {
-        return this.condition;
-    }
     
     /**
      * jpa 分页以0开始

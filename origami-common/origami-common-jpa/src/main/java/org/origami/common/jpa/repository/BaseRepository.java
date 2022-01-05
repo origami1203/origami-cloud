@@ -40,7 +40,7 @@ public interface BaseRepository<T extends BaseEntity> extends
         
         Specification<T> spec = SpecificationUtil.getSpecification(pageQuery);
         
-        Sort sort = pageQuery.getSort(pageQuery.getOrders());
+        Sort sort = pageQuery.getSort();
         Pageable page = PageRequest.of(pageQuery.getPageNum(), pageQuery.getPageSize(), sort);
         
         return findAll(spec, page);
@@ -54,7 +54,7 @@ public interface BaseRepository<T extends BaseEntity> extends
      */
     default List<T> list(QueryCondition<?> condition) {
         Specification<T> spec = SpecificationUtil.getSpecification(condition);
-        return findAll(spec, condition.getSort(condition.getOrders()));
+        return findAll(spec, condition.getSort());
     }
     
     default Long count(QueryCondition<?> condition) {
