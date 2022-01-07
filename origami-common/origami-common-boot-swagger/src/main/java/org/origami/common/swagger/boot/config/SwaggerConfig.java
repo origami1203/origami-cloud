@@ -29,7 +29,7 @@ import java.util.List;
 @Configuration
 @EnableOpenApi
 @ConditionalOnWebApplication
-// @EnableConfigurationProperties(SwaggerProperties.class)
+@EnableConfigurationProperties(SwaggerProperties.class)
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 public class SwaggerConfig {
 
