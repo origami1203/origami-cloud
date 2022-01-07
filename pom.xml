@@ -14,6 +14,7 @@
         <!--        <module>origami-auth</module>-->
         <module>origami-common</module>
         <module>origami-upm</module>
+        <module>origami-test</module>
     </modules>
 
     <properties>
@@ -33,6 +34,7 @@
         <mysql.version>5.1.38</mysql.version>
         <knife4j.version>3.0.3</knife4j.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <swagger3.version>3.0.0</swagger3.version>
     </properties>
 
     <dependencies>
@@ -141,6 +143,12 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger3.version}</version>
+            </dependency>
+
 
             <!--内部版本管理-->
             <dependency>
@@ -172,6 +180,20 @@
                 <artifactId>origami-upm-api</artifactId>
                 <version>${origami-cloud.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-common-jpa</artifactId>
+                <version>${origami-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-common-boot-swagger</artifactId>
+                <version>${origami-cloud.version}</version>
+            </dependency>
+
+
 
         </dependencies>
     </dependencyManagement>
@@ -219,22 +241,22 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--    <groupId>org.springframework.boot</groupId>-->
-            <!--    <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--    <version>2.3.7.RELEASE</version>-->
-            <!--    <configuration>-->
-            <!--        <classifier>execute</classifier>-->
-            <!--    </configuration>-->
-            <!--    <executions>-->
-            <!--        <execution>-->
-            <!--            <id>repackage</id>-->
-            <!--            <goals>-->
-            <!--                <goal>repackage</goal>-->
-            <!--            </goals>-->
-            <!--        </execution>-->
-            <!--    </executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.7.RELEASE</version>
+                <configuration>
+                    <classifier>execute</classifier>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
