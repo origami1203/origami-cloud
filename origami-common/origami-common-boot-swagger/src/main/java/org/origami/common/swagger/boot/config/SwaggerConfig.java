@@ -1,6 +1,5 @@
 package org.origami.common.swagger.boot.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,52 +29,58 @@ import java.util.List;
 @EnableOpenApi
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(SwaggerProperties.class)
-@ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "swagger", name = "enabled", matchIfMissing = true, havingValue = "true")
 public class SwaggerConfig {
-
+    
     /**
      * 默认的排除路径，排除Spring Boot默认的错误处理路径和端点
      */
-    private static final List<String> DEFAULT_EXCLUDE_PATH = Arrays.asList("/error", "/actuator/**");
-
+    private static final List<String> DEFAULT_EXCLUDE_PATH =
+            Arrays.asList("/error", "/actuator/**");
+    
     private static final String BASE_PATH = "/**";
-
+    
     @Bean
     public Docket api(SwaggerProperties properties) {
-
+        
         if (properties.getBasePath().isEmpty()) {
             properties.getBasePath().add(BASE_PATH);
         }
         properties.getExcludePath().addAll(DEFAULT_EXCLUDE_PATH);
-
-        ApiSelectorBuilder builder = new Docket(DocumentationType.OAS_30)    // 3.0版本
-                .apiInfo(apiInfo(swaggerProperties()))
+        // 3.0版本
+        ApiSelectorBuilder builder = new Docket(DocumentationType.OAS_30)
+                .apiInfo(apiInfo(properties))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(properties.getBasePackage()));
-
+        
         properties.getBasePath().stream().map(PathSelectors::ant).forEach(builder::paths);
-        properties.getExcludePath().stream().map(excludePath -> PathSelectors.ant(excludePath).negate()).forEach(builder::paths);
-
+        properties.getExcludePath()
+                  .stream()
+                  .map(excludePath -> PathSelectors.ant(excludePath).negate())
+                  .forEach(builder::paths);
+        
         return builder.build();
     }
-
+    
     @Bean
     public ApiInfo apiInfo(SwaggerProperties properties) {
         return new ApiInfoBuilder()
                 .title(properties.getTitle())
                 .description(properties.getDescription())
                 .version(properties.getVersion())
-                .contact(new Contact(properties.getContact().getName(), properties.getContact().getUrl(), properties.getContact().getEmail()))
+                .contact(new Contact(properties.getContact().getName(),
+                                     properties.getContact().getUrl(),
+                                     properties.getContact().getEmail()))
                 .license(properties.getLicense())
                 .licenseUrl(properties.getLicenseUrl())
                 .termsOfServiceUrl(properties.getTermsOfServiceUrl())
                 .build();
     }
-
-    @Bean
-    @ConditionalOnMissingBean(SwaggerProperties.class)
-    public SwaggerProperties swaggerProperties() {
-        return new SwaggerProperties();
-    }
-
+    
+    // @Bean
+    // @ConditionalOnMissingBean
+    // public SwaggerProperties swaggerProperties() {
+    //     return new SwaggerProperties();
+    // }
+    
 }
