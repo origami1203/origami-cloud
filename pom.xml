@@ -234,8 +234,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <!--当项目中使用aspectj时,确保只被注解驱动解析一次-->
-                    <proc>none</proc>
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
