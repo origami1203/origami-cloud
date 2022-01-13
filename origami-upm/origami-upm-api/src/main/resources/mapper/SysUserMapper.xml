@@ -31,13 +31,16 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="enabled" jdbcType="VARCHAR" property="enabled"/>
         <collection property="roles" ofType="string" javaType="list">
-            <result column="role_name"/>
+            <result column="role_code"/>
         </collection>
     </resultMap>
 
-    <select id="getUserDTOByUsername" resultType="org.origami.upm.api.dto.SysUserDTO">
-        select *
-        from sys_user u
-                     left join sys_role r on
+    <select id="getUserDTOByUsername" resultMap="UserDTO">
+        select su.id, su.username, su.password, su.enabled, sr.role_code
+        from sys_user su
+                     left join sys_user_role sur on su.id = sur.user_id
+                     left join sys_role sr on sur.role_id = sr.id
+        where su.username = #{username}
+          and su.is_deleted is false
     </select>
 </mapper>
