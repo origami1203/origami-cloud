@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.origami.common.mybatis.entity.BaseEntity;
 
-import java.io.Serializable;
-
 /**
  * 角色实体类
  *
@@ -17,8 +15,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "角色实体类")
-public class SysRole extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = 2131384971058799092L;
+public class SysRole extends BaseEntity {
     
     @ApiModelProperty(value = "角色名称", example = "管理员")
     private String roleName;

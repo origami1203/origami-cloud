@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.origami.common.mybatis.entity.BaseEntity;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -23,8 +22,7 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "用户实体类")
-public class SysUser extends BaseEntity implements Serializable {
-    private static final long serialVersionUID = -5935539495736531958L;
+public class SysUser extends BaseEntity {
     
     @ApiModelProperty(value = "用户名，登陆用户名")
     private String username;
