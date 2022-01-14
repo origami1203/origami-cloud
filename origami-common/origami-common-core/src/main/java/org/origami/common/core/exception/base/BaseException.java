@@ -30,6 +30,10 @@ public class BaseException extends RuntimeException {
      */
     private String message;
 
+    public BaseException() {
+        this(Code.ERROR);
+    }
+
     public BaseException(String message) {
         this(Code.ERROR.getCode(), message);
     }
