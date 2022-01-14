@@ -30,8 +30,8 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         log.debug("mybatis-plus自动更新字段开始...");
         
-        strictInsertFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
-        strictInsertFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
+        strictUpdateFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
+        strictUpdateFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
     }
     
 }
