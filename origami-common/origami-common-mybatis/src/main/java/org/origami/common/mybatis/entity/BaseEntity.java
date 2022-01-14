@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -52,6 +53,7 @@ public abstract class BaseEntity {
     /**
      * 逻辑删除
      */
+    @JsonIgnore
     @TableLogic(value = "0", delval = "1")
     @ApiModelProperty(value = "逻辑删除")
     @TableField(value = "is_deleted")
@@ -61,6 +63,7 @@ public abstract class BaseEntity {
      * 乐观锁
      */
     @Version
+    @JsonIgnore
     @ApiModelProperty(value = "版本号")
     protected Long version;
 }
