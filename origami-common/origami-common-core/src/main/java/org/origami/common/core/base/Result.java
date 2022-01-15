@@ -32,7 +32,7 @@ public class Result<T> implements Serializable {
      */
     private T data;
 
-    public static Result ok() {
+    public static Result<Void> ok() {
         return ok(null);
     }
 
