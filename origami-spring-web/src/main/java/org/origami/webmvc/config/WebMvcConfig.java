@@ -2,6 +2,7 @@ package org.origami.webmvc.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.origami.common.core.utils.JacksonUtil;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -27,7 +28,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 所有请求
         registry.addMapping("/**")
                 // 允许的方法
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 // 允许任意其他源跨域请求
                 .allowedOrigins("*")
                 .maxAge(3600);
@@ -39,12 +40,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        
+        converters.add(mappingJackson2HttpMessageConverter());
+        log.debug("jackson配置成功");
+    }
+    
+    @Bean
+    MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter =
                 new MappingJackson2HttpMessageConverter();
-        // 只要设置为JacksonUtil的配置
+        // JacksonUtil已经配置ObjectMapper
         jackson2HttpMessageConverter.setObjectMapper(JacksonUtil.getObjectMapper());
-        converters.add(jackson2HttpMessageConverter);
-        
-        log.debug("jackson配置成功");
+        return jackson2HttpMessageConverter;
     }
 }
