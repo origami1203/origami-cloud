@@ -1,6 +1,5 @@
 package org.origami.common.swagger.boot.config;
 
-import io.swagger.models.Contact;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -40,7 +39,7 @@ public class SwaggerProperties {
     /**
      * 标题
      **/
-    private String title = "";
+    private String title = "Swagger接口";
     
     /**
      * 描述
@@ -50,31 +49,34 @@ public class SwaggerProperties {
     /**
      * 版本
      **/
-    private String version = "";
+    private String version = "1.0.0";
     
     /**
      * 许可证
      **/
-    private String license = "";
+    private String license = "#";
     
     /**
      * 许可证URL
      **/
-    private String licenseUrl = "";
+    private String licenseUrl = "#";
     
     /**
      * 服务条款URL
      **/
-    private String termsOfServiceUrl = "";
-    
-    /**
-     * host信息
-     **/
-    private String host = "";
+    private String termsOfServiceUrl = "#";
     
     /**
      * 联系人信息
      */
     private Contact contact = new Contact();
+
+    @Data
+    public class Contact {
+        private String name;
+        private String url;
+        private String email;
+    }
+
     
 }
