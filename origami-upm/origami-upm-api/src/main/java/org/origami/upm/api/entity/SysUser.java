@@ -2,12 +2,12 @@ package org.origami.upm.api.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.origami.common.core.utils.JacksonUtil;
 import org.origami.common.mybatis.entity.BaseEntity;
 
 import java.time.LocalDate;
@@ -31,7 +31,6 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty(value = "昵称，显示的用户名")
     private String nickname;
     
-    @JsonIgnore
     @ApiModelProperty(value = "密码")
     private String password;
     
