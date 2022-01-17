@@ -13,7 +13,7 @@
         web mvc相关配置，如跨域、jackson配置等
     </description>
 
-    <artifactId>origami-spring-web</artifactId>
+    <artifactId>origami-spring-webmvc</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

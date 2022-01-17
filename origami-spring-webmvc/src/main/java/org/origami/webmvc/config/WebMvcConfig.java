@@ -32,7 +32,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 // 允许任意其他源跨域请求
                 .allowedOrigins("*")
                 .maxAge(3600);
-        log.debug("跨域配置成功");
     }
     
     /**
@@ -42,7 +41,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         
         converters.add(mappingJackson2HttpMessageConverter());
-        log.debug("jackson配置成功");
     }
     
     @Bean

@@ -14,7 +14,7 @@
         <!--        <module>origami-auth</module>-->
         <module>origami-common</module>
         <module>origami-upm</module>
-        <module>origami-spring-web</module>
+        <module>origami-spring-webmvc</module>
     </modules>
 
     <properties>
@@ -203,7 +203,7 @@
 
             <dependency>
                 <groupId>org.origami</groupId>
-                <artifactId>origami-spring-web</artifactId>
+                <artifactId>origami-spring-webmvc</artifactId>
                 <version>${origami-cloud.version}</version>
             </dependency>
 
