@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -32,7 +33,7 @@ import java.util.List;
 public class JacksonUtil {
     private static final String DEFAULT_DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    
+
     static {
         MAPPER
                 // 日期格式
@@ -42,8 +43,10 @@ public class JacksonUtil {
                 // json中有实体类没有的字段时,不报错
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 // 忽略空bean转json错误
-                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                // 若有getName()方法,但没有name属性,是否显示name字段
+                .configure(MapperFeature.USE_GETTERS_AS_SETTERS, false);
+
         // LocalDateTime转换
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT_PATTERN);
         JavaTimeModule javaTimeModule = new JavaTimeModule();
@@ -56,9 +59,9 @@ public class JacksonUtil {
         simpleModule.addSerializer(Long.class, new ToStringSerializer());
         simpleModule.addSerializer(Long.TYPE, new ToStringSerializer());
         MAPPER.registerModules(javaTimeModule, simpleModule);
-        
+
     }
-    
+
     /**
      * 获取mapper
      *
@@ -67,7 +70,7 @@ public class JacksonUtil {
     public static ObjectMapper getObjectMapper() {
         return MAPPER;
     }
-    
+
     /**
      * 对象转json
      *
@@ -77,7 +80,7 @@ public class JacksonUtil {
     public String toJson(Object src) {
         return toJson(src, false);
     }
-    
+
     /**
      * 转换为json串，根据配置决定是否报异常
      *
@@ -89,10 +92,10 @@ public class JacksonUtil {
         if (src == null) {
             return null;
         }
-        
+
         try {
             return src instanceof String ? ((String) src)
-                                         : MAPPER.writeValueAsString(src);
+                    : MAPPER.writeValueAsString(src);
         } catch (JsonProcessingException e) {
             if (throwException) {
                 throw new BaseException("json解析失败");
@@ -101,7 +104,7 @@ public class JacksonUtil {
             return null;
         }
     }
-    
+
     /**
      * 返回美化json
      *
@@ -112,16 +115,16 @@ public class JacksonUtil {
         if (bean == null) {
             return null;
         }
-        
+
         try {
             return bean instanceof String ? ((String) bean)
-                                          : MAPPER.writerWithDefaultPrettyPrinter()
-                                                  .writeValueAsString(bean);
+                    : MAPPER.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(bean);
         } catch (JsonProcessingException e) {
             return null;
         }
     }
-    
+
     /**
      * json转bean
      *
@@ -135,7 +138,7 @@ public class JacksonUtil {
         if (json == null || beanType == null) {
             return null;
         }
-        
+
         try {
             return MAPPER.readValue(json, beanType);
         } catch (JsonProcessingException e) {
@@ -146,7 +149,7 @@ public class JacksonUtil {
             return null;
         }
     }
-    
+
     /**
      * json解析为bean
      *
@@ -158,7 +161,7 @@ public class JacksonUtil {
     public <T> T fromJson(String json, Class<T> beanType) {
         return fromJson(json, beanType, false);
     }
-    
+
     /**
      * json转泛型list
      *
@@ -172,7 +175,7 @@ public class JacksonUtil {
         if (json == null || beanType == null) {
             return null;
         }
-        
+
         try {
             return MAPPER.readValue(json, new TypeReference<List<T>>() {
             });
@@ -184,7 +187,7 @@ public class JacksonUtil {
             return null;
         }
     }
-    
+
     /**
      * json转泛型list,解析失败不抛异常
      *
