@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.boot.starter.autoconfigure.SwaggerUiWebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -42,6 +43,8 @@ public class SwaggerConfig {
     
     @Bean
     public Docket api(SwaggerProperties properties) {
+    
+        System.out.println("11111111111111111111111111111111111111111111111111");
         
         if (properties.getBasePath().isEmpty()) {
             properties.getBasePath().add(BASE_PATH);
@@ -75,6 +78,11 @@ public class SwaggerConfig {
                 .licenseUrl(properties.getLicenseUrl())
                 .termsOfServiceUrl(properties.getTermsOfServiceUrl())
                 .build();
+    }
+    
+    @Bean
+    public SwaggerUiWebMvcConfigurer swaggerUiConfigurer(SwaggerProperties properties) {
+        return new SwaggerUiWebMvcConfigurer("");
     }
     
     // @Bean
