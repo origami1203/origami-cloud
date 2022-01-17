@@ -34,7 +34,8 @@
         <mysql.version>5.1.38</mysql.version>
         <knife4j.version>3.0.3</knife4j.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <swagger3.version>3.0.0</swagger3.version>
+        <swagger.version>3.0.0</swagger.version>
+        <mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
     </properties>
 
     <dependencies>
@@ -167,6 +168,13 @@
                 <groupId>org.origami</groupId>
                 <artifactId>origami-common-mybatis</artifactId>
                 <version>${origami-cloud.version}</version>
+            </dependency>
+
+            <!--用于mybatis自动建表-->
+            <dependency>
+                <groupId>com.gitee.sunchenbin.mybatis.actable</groupId>
+                <artifactId>mybatis-enhance-actable</artifactId>
+                <version>${mybatis-enhance-actable.version}</version>
             </dependency>
 
             <dependency>
