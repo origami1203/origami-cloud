@@ -20,15 +20,15 @@ public class BaseException extends RuntimeException {
     /**
      * 异常的位置
      */
-    private String location;
+    private final String location;
     /**
      * 状态码
      */
-    private String code;
+    private final String code;
     /**
      * 提示信息
      */
-    private String message;
+    private final String message;
 
     public BaseException() {
         this(Code.ERROR);
