@@ -44,8 +44,8 @@ public class JacksonUtil {
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 // 忽略空bean转json错误
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                // 若有getName()方法,但没有name属性,是否显示name字段
-                .configure(MapperFeature.USE_GETTERS_AS_SETTERS, false);
+                // 若只有getName()方法,但没有name属性和set方法,不显示name字段
+                .configure(MapperFeature.REQUIRE_SETTERS_FOR_GETTERS, true);
 
         // LocalDateTime转换
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT_PATTERN);
