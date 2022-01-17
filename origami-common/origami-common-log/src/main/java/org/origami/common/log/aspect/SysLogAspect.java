@@ -3,6 +3,7 @@ package org.origami.common.log.aspect;
 import com.google.common.base.Strings;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -38,7 +39,7 @@ public class SysLogAspect {
     private void classPointcut() {
     }
     
-    // TODO yml文件动态配置需要日志的范围
+    @SneakyThrows
     @Around(value = "methodPointcut() || classPointcut()")
     public Object around(ProceedingJoinPoint pjp) {
         
@@ -65,6 +66,8 @@ public class SysLogAspect {
         } catch (Throwable e) {
             sysLogInfo.setWithExceptions(true);
             sysLogInfo.setExceptionMsg(e.getMessage());
+            // 获取异常信息后继续抛出，不要吞掉异常，抛出后到controller，全局异常处理
+            throw e;
         } finally {
             stopWatch.stop();
             sysLogInfo.setTimeConsumed(stopWatch.getTotalTimeMillis())
