@@ -1,6 +1,7 @@
 package org.origami.webmvc;
 
 import org.origami.webmvc.config.WebMvcConfig;
+import org.origami.webmvc.handler.GlobalExceptionHandler;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -18,6 +19,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(WebMvcConfig.class)
+@Import({WebMvcConfig.class, GlobalExceptionHandler.class})
 public @interface EnableWebMvcConfig {
 }
