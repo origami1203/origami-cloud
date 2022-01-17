@@ -23,4 +23,16 @@ public class Assert {
             throw new IllegalParamException(message);
         }
     }
+    
+    /**
+     * 断言为true
+     *
+     * @param condition 条件
+     * @param message   错误提示信息
+     */
+    public void isTrue(boolean condition, String message) {
+        if (!condition) {
+            throw new IllegalParamException(message);
+        }
+    }
 }
