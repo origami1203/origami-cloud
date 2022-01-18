@@ -1,8 +1,10 @@
 package org.origami.common.mybatis.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.origami.common.core.data.page.Page;
+import org.origami.common.core.data.page.impl.PageImpl;
 import org.origami.common.mybatis.condition.impl.PageQueryCondition;
 import org.origami.common.mybatis.condition.impl.QueryCondition;
 import org.origami.common.mybatis.entity.BaseEntity;
@@ -36,10 +38,16 @@ public interface BaseService<T extends BaseEntity> extends IService<T> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    default IPage<T> page(PageQueryCondition<?> condition) {
-        Page<T> page = new Page<>(condition.getPageNum(),
-                                             condition.getPageSize());
-        return getBaseMapper().selectPage(page, WrapperUtil.getWrapper(condition));
+    default Page<T> page(PageQueryCondition<?> condition) {
+        PageDTO<T> pageDTO =
+                new PageDTO<>(condition.getPageNum(), condition.getPageSize());
+        IPage<T> iPage = getBaseMapper().selectPage(pageDTO,
+                                                    WrapperUtil.getWrapper(condition));
+        
+        return new PageImpl<T>(Long.valueOf(iPage.getCurrent()).intValue(),
+                               Long.valueOf(iPage.getSize()).intValue(),
+                               iPage.getTotal(),
+                               iPage.getRecords());
     }
     
     /**
