@@ -144,13 +144,6 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${swagger3.version}</version>
-            </dependency>
-
-
             <!--内部版本管理-->
             <dependency>
                 <groupId>org.origami</groupId>
