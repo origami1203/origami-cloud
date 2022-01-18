@@ -54,7 +54,7 @@ public class SwaggerProperties {
     /**
      * 许可证
      **/
-    private String license = "#";
+    private String license = "";
     
     /**
      * 许可证URL
