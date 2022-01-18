@@ -6,8 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.origami.common.core.condition.Condition;
+import org.origami.common.core.data.condition.Condition;
 import org.springframework.data.domain.Sort;
 
 import java.util.Collections;

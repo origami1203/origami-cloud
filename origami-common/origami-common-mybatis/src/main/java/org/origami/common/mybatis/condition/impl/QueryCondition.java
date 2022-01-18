@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.origami.common.core.condition.Condition;
+import org.origami.common.core.data.condition.Condition;
 import org.origami.common.mybatis.enums.Direction;
 
 import java.io.Serializable;

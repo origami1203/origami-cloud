@@ -3,7 +3,7 @@ package org.origami.common.jpa.utils;
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
 import lombok.experimental.UtilityClass;
-import org.origami.common.core.condition.Condition;
+import org.origami.common.core.data.condition.Condition;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Map;

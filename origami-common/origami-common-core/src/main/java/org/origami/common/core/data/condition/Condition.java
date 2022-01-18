@@ -1,6 +1,4 @@
-package org.origami.common.core.condition;
-
-import cn.hutool.db.sql.Direction;
+package org.origami.common.core.data.condition;
 
 import java.util.Map;
 

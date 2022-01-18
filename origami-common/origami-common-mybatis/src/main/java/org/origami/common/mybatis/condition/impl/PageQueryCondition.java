@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.origami.common.core.exception.IllegalParamException;
 
 /**
  * 分页条件查询的复合条件
@@ -22,7 +23,7 @@ public class PageQueryCondition<T> extends QueryCondition<T> {
      * 页码
      */
     @ApiModelProperty(value = "页码")
-    private Integer pageNum = 0;
+    private Integer pageNum = 1;
     /**
      * 每页大小
      */
@@ -37,13 +38,13 @@ public class PageQueryCondition<T> extends QueryCondition<T> {
     @SuppressWarnings("rawtypes")
     public PageQueryCondition setPageNum(Integer pageNum) {
         
-        if (pageNum == null) {
-            throw new IllegalArgumentException("页码不能为空");
-        }
-        
-        if (pageNum < 1) {
-            throw new IllegalArgumentException("页码必须大于等于1");
-        }
+        // if (pageNum == null) {
+        //     throw new IllegalParamException("页码不能为空");
+        // }
+        //
+        // if (pageNum < 1) {
+        //     throw new IllegalParamException("页码必须大于等于1");
+        // }
         
         this.pageNum = pageNum;
         
@@ -59,15 +60,15 @@ public class PageQueryCondition<T> extends QueryCondition<T> {
     @SuppressWarnings("rawtypes")
     public PageQueryCondition setPageSize(Integer pageSize) {
         
-        if (pageSize == null) {
-            this.pageSize = DEFAULT_PAGE_SIZE;
-            return this;
-        }
-        
-        if (pageSize < 1) {
-            throw new IllegalArgumentException("每页显示数量不能为空");
-        }
-        
+        // if (pageSize == null) {
+        //     this.pageSize = DEFAULT_PAGE_SIZE;
+        //     return this;
+        // }
+        //
+        // if (pageSize < 1) {
+        //     throw new IllegalParamException("每页显示数量不能为空");
+        // }
+        //
         this.pageSize = pageSize;
         
         return this;
