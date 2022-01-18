@@ -3,8 +3,6 @@ package org.origami.common.core.exception.base;
 import lombok.Getter;
 import org.origami.common.core.base.Code;
 
-import java.util.Arrays;
-
 /**
  * 基类Exception
  *
@@ -17,10 +15,6 @@ public class BaseException extends RuntimeException {
 
     private static final long serialVersionUID = 4253633498393349969L;
 
-    /**
-     * 异常的位置
-     */
-    private final String location;
     /**
      * 状态码
      */
@@ -47,13 +41,6 @@ public class BaseException extends RuntimeException {
         super(message);
         this.code = code;
         this.message = message;
-        this.location = getExceptionDetail();
-    }
-
-    private String getExceptionDetail() {
-        return Arrays.stream(this.getStackTrace()).findFirst()
-                .map(s -> "location: " + s.getClassName() + "#" + s.getMethodName() + "()方法->" + s.getLineNumber() + "行")
-                .orElse("null");
     }
 
 }
