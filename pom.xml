@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!--        <module>origami-auth</module>-->
+        <module>origami-auth</module>
         <module>origami-common</module>
         <module>origami-upm</module>
         <module>origami-spring-webmvc</module>
