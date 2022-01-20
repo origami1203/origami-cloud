@@ -1,6 +1,6 @@
-package org.origami.upm.api.service;
+package org.origami.upm.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import org.origami.common.mybatis.service.BaseService;
 import org.origami.upm.api.entity.SysRole;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author origami
  * @date 2022/1/13 22:04
  */
-public interface SysRoleService extends IService<SysRole> {
+public interface SysRoleService extends BaseService<SysRole> {
     
     List<SysRole> getListByUserId(Long userId);
     
