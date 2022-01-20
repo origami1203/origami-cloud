@@ -5,7 +5,6 @@ import org.origami.common.core.base.Result;
 import org.origami.common.core.exception.base.BaseException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,7 +25,6 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(Exception.class)
     public Result<Void> exception(Exception e) {
-        log.debug("未知异常");
         return Result.failed(e.getMessage());
     }
     

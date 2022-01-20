@@ -1,9 +1,9 @@
-package org.origami.upm.api.service.impl;
+package org.origami.upm.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.origami.upm.api.entity.SysRole;
-import org.origami.upm.api.mapper.SysRoleMapper;
-import org.origami.upm.api.service.SysRoleService;
+import org.origami.upm.mapper.SysRoleMapper;
+import org.origami.upm.service.SysRoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

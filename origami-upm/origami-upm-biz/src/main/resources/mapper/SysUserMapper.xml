@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.origami.upm.api.mapper.SysUserMapper">
+<mapper namespace="org.origami.upm.mapper.SysUserMapper">
     <resultMap id="BaseResultMap" type="org.origami.upm.api.entity.SysUser">
         <!--@mbg.generated-->
         <!--@Table sys_user-->
@@ -12,7 +12,7 @@
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="version" jdbcType="BIGINT" property="version"/>
         <result column="birthday" jdbcType="DATE" property="birthday"/>
-        <result column="enabled" jdbcType="BIT" property="enabled"/>
+        <result column="is_enabled" jdbcType="BIT" property="enabled"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -22,25 +22,33 @@
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, create_by, create_date, is_deleted, update_by, update_date, version, birthday,
-        enabled, gender, nickname, `password`, phone, username
+        is_enabled, gender, nickname, `password`, phone, username
     </sql>
 
     <resultMap id="UserDTO" type="org.origami.upm.api.dto.SysUserDTO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="enabled" jdbcType="VARCHAR" property="enabled"/>
+        <result column="is_enabled" jdbcType="VARCHAR" property="enabled"/>
         <collection property="roles" ofType="string" javaType="list">
             <result column="role_code"/>
         </collection>
     </resultMap>
 
     <select id="getUserDTOByUsername" resultMap="UserDTO">
-        select su.id, su.username, su.password, su.enabled, sr.role_code
+        select su.id, su.username, su.password, su.is_enabled, sr.role_code
         from sys_user su
                      left join sys_user_role sur on su.id = sur.user_id
                      left join sys_role sr on sur.role_id = sr.id
         where su.username = #{username}
           and su.is_deleted is false
+    </select>
+
+    <select id="getUserByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where phone = #{phone}
+          and is_deleted = false
     </select>
 </mapper>

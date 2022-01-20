@@ -1,11 +1,11 @@
-package org.origami.upm.api.service.impl;
+package org.origami.upm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.origami.upm.api.dto.SysUserDTO;
 import org.origami.upm.api.entity.SysUser;
-import org.origami.upm.api.mapper.SysUserMapper;
-import org.origami.upm.api.service.SysUserService;
+import org.origami.upm.mapper.SysUserMapper;
+import org.origami.upm.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

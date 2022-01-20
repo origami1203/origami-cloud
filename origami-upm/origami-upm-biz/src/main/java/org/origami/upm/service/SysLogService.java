@@ -1,4 +1,4 @@
-package org.origami.upm.api.service;
+package org.origami.upm.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.origami.upm.api.entity.SysLog;

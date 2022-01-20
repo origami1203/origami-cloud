@@ -12,7 +12,7 @@ import lombok.Getter;
 public enum Code {
 
     SUCCESS("00000", "成功"),
-    ERROR("44444", "请求错误"),
+    ERROR("-1", "请求错误"),
     USER_ERROR("A0000", "用户端错误"),
     USER_NOT_EXIST("A0201", "账户不存在"),
     NO_PERMISSION("A0300", "没有权限"),
