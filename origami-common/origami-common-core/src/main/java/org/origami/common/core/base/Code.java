@@ -17,7 +17,12 @@ public enum Code {
     USER_NOT_EXIST("A0201", "账户不存在"),
     NO_PERMISSION("A0300", "没有权限"),
     REQUEST_PARAM_ERROR("A0400", "用户请求参数错误"),
-    RESOURCE_NOT_FOUND("A0401", "请求资源未找到");
+    RESOURCE_NOT_FOUND("A0401", "请求资源未找到"),
+    SYSTEM_ERROR("B0001","系统执行出错"),
+    SYSTEM_TIME_OUT("B0100","系统执行超时"),
+    SYSTEM_LIMITING("B0210","系统限流"),
+    SYSTEM_FALLBACK("B0220", "系统功能降级");
+
 
     @Getter
     private final String code;
