@@ -1,6 +1,7 @@
-package org.origami.auth.origamiauth.config;
+package org.origami.auth.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @date 2021-12-23 21:25
  * @description TODO
  */
+@Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Bean
