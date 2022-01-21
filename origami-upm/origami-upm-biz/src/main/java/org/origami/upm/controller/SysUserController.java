@@ -9,6 +9,7 @@ import org.origami.common.core.data.page.Page;
 import org.origami.common.core.exception.base.BaseException;
 import org.origami.common.log.annotation.SysLog;
 import org.origami.common.mybatis.condition.impl.PageQueryCondition;
+import org.origami.upm.api.dto.SysUserDTO;
 import org.origami.upm.api.entity.SysUser;
 import org.origami.upm.service.SysUserService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,66 +30,76 @@ import java.util.Optional;
  */
 @Api(tags = "用户接口")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/sys")
 @RequiredArgsConstructor
 public class SysUserController {
-    
+
     private final SysUserService sysUserService;
-    
+
     @ApiOperation("添加用户")
-    @PostMapping("")
+    @PostMapping("/user")
     public Result<SysUser> add(@RequestBody SysUser user) {
         return Optional.ofNullable(user)
-                       .map(s -> {
-                           sysUserService.save(s);
-                           return s;
-                       })
-                       .map(Result::ok)
-                       .orElseThrow(BaseException::new);
+                .map(s -> {
+                    sysUserService.save(s);
+                    return s;
+                })
+                .map(Result::ok)
+                .orElseThrow(BaseException::new);
     }
-    
+
     @ApiOperation("获取指定id用户")
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     @ApiParam(value = "用户id", required = true)
-    public Result<Void> getById(@PathVariable("id") Long id) {
+    public Result<SysUser> getById(@PathVariable("id") Long id) {
         return Optional.ofNullable(id)
-                       .map(sysUserService::getById)
-                       .map(s -> Result.ok())
-                       .orElseThrow(BaseException::new);
+                .map(sysUserService::getById)
+                .map(Result::ok)
+                .orElseThrow(BaseException::new);
     }
-    
+
+    @ApiOperation("通过用户名查询")
+    @GetMapping("/user/{username}")
+    @ApiParam(value = "用户id", required = true)
+    public Result<SysUserDTO> getAuthUserByUsername(@PathVariable("username") String username) {
+        return Optional.ofNullable(username)
+                .map(sysUserService::getUserWithRolesByUsername)
+                .map(Result::ok)
+                .orElseThrow(BaseException::new);
+    }
+
     @ApiOperation("删除指定id用户")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     @ApiParam(value = "用户id", required = true)
     public Result<Void> deleteById(@PathVariable("id") Long id) {
         return Optional.ofNullable(id)
-                       .map(sysUserService::removeById)
-                       .map(s -> Result.ok())
-                       .orElseThrow(BaseException::new);
+                .map(sysUserService::removeById)
+                .map(s -> Result.ok())
+                .orElseThrow(BaseException::new);
     }
-    
+
     @ApiOperation("更新用户")
-    @PutMapping("")
+    @PutMapping("/user")
     public Result<SysUser> update(@RequestBody SysUser sysUser) {
         return Optional.ofNullable(sysUser)
-                       .map(s -> {
-                           sysUserService.updateById(s);
-                           return s;
-                       })
-                       .map(Result::ok)
-                       .orElseThrow(BaseException::new);
+                .map(s -> {
+                    sysUserService.updateById(s);
+                    return s;
+                })
+                .map(Result::ok)
+                .orElseThrow(BaseException::new);
     }
-    
+
     @SysLog
     @ApiOperation("分页")
-    @GetMapping("")
+    @GetMapping("/users")
     public Result<Page<SysUser>> page(PageQueryCondition<SysUser> page) {
         return Optional.ofNullable(page)
-                       .map(s -> sysUserService.page(page))
-                       .map(Result::ok)
-                       .orElseThrow(BaseException::new);
+                .map(s -> sysUserService.page(page))
+                .map(Result::ok)
+                .orElseThrow(BaseException::new);
     }
-    
+
     @SysLog
     @ApiOperation("测试")
     @GetMapping("/test")
