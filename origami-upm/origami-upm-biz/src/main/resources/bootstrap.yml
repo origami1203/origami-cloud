@@ -5,11 +5,12 @@ spring:
   application:
     name: origami-upm
 
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 192.168.2.128:8847
-#      config:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.128:8847
+        namespace: d12f0770-ceaa-4215-9355-63676d1abeee
+  #      config:
 #        server-addr: ${spring.cloud.nacos.discovery.server-addr}
 #        namespace: d12f0770-ceaa-4215-9355-63676d1abeee
 #        file-extension: yml
@@ -19,6 +20,9 @@ spring:
     url: jdbc:mysql://192.168.2.129:8337/system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: root
+
+swagger:
+  enabled: true
 
 
 logging:

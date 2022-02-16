@@ -40,6 +40,11 @@ public class SysUserFeignClientFallback implements SysUserFeignClient {
     }
 
     @Override
+    public Result<SysUser> getByUsername(String username) {
+        return Result.failed(Code.SYSTEM_FALLBACK);
+    }
+
+    @Override
     public Result<SysUserDTO> getAuthUserByUsername(String username) {
         return Result.failed(Code.SYSTEM_FALLBACK);
     }

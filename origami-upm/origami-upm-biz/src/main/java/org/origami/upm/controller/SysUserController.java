@@ -58,6 +58,16 @@ public class SysUserController {
                 .orElseThrow(BaseException::new);
     }
 
+    @ApiOperation("获取用户名查询用户")
+    @GetMapping("/user/name/{username}")
+    @ApiParam(value = "用户名", required = true)
+    public Result<SysUser> getByUsername(@PathVariable("username") String username) {
+        return Optional.ofNullable(username)
+                .map(sysUserService::getByUsername)
+                .map(Result::ok)
+                .orElseThrow(BaseException::new);
+    }
+
     @ApiOperation("通过用户名查询")
     @GetMapping("/authuser/{username}")
     @ApiParam(value = "用户id", required = true)
