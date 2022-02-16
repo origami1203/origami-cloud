@@ -15,6 +15,7 @@
         <module>origami-common</module>
         <module>origami-upm</module>
         <module>origami-spring-webmvc</module>
+        <module>origami-gateway</module>
     </modules>
 
     <properties>
@@ -36,6 +37,7 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <swagger.version>3.0.0</swagger.version>
         <mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
+        <feign-okhttp.version>11.8</feign-okhttp.version>
     </properties>
 
     <dependencies>
@@ -200,6 +202,11 @@
                 <version>${origami-cloud.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${feign-okhttp.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
