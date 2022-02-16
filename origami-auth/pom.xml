@@ -25,6 +25,12 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+
         <!--spring-cloud-starter-security和spring-security-oauth2-autoconfigure过时弃用
         认证服务器使用此依赖
         其他oauth2相关已经整合到spring-security5.x中-->
@@ -59,12 +65,13 @@
 
         <dependency>
             <groupId>org.origami</groupId>
-            <artifactId>origami-upm-api</artifactId>
+            <artifactId>origami-spring-webmvc</artifactId>
         </dependency>
 
+
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>org.origami</groupId>
+            <artifactId>origami-upm-api</artifactId>
         </dependency>
 
         <!--feign负载均衡 ribbon停止维护，使用loadbalancer-->
@@ -76,6 +83,11 @@
         <dependency>
             <groupId>org.origami</groupId>
             <artifactId>origami-common-boot-swagger</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
         </dependency>
 
 
