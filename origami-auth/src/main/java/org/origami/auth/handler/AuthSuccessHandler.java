@@ -25,8 +25,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
                                                                               ServletException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-        
+
         PrintWriter writer = response.getWriter();
         
         writer.write(JacksonUtil.toJson(Result.ok("认证成功")));

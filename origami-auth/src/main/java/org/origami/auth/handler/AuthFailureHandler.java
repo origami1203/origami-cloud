@@ -25,8 +25,7 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
                                                                                   ServletException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        
+
         PrintWriter writer = response.getWriter();
         
         writer.write(JacksonUtil.toJson(Result.failed("认证失败")));

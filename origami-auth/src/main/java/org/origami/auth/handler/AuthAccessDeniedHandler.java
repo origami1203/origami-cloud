@@ -27,8 +27,7 @@ public class AuthAccessDeniedHandler implements AccessDeniedHandler {
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        
+
         PrintWriter writer = response.getWriter();
         
         writer.write(JacksonUtil.toJson(Result.failed(Code.NO_PERMISSION)));
