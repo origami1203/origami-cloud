@@ -48,7 +48,7 @@ public interface SysUserFeignClient {
     Result<Page<SysUser>> page(PageQueryCondition<SysUser> page);
 
     @ApiOperation("通过用户名查询")
-    @GetMapping("/user/{username}")
+    @GetMapping("/authuser/{username}")
     @ApiParam(value = "用户id", required = true)
     Result<SysUserDTO> getAuthUserByUsername(@PathVariable("username") String username);
 }
