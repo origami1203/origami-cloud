@@ -15,6 +15,7 @@ public enum Code {
     ERROR("-1", "请求错误"),
     USER_ERROR("A0000", "用户端错误"),
     USER_NOT_EXIST("A0201", "账户不存在"),
+    USER_NOT_LOGIN("A0202", "未登录"),
     NO_PERMISSION("A0300", "没有权限"),
     REQUEST_PARAM_ERROR("A0400", "用户请求参数错误"),
     RESOURCE_NOT_FOUND("A0401", "请求资源未找到"),
