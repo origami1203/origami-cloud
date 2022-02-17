@@ -8,23 +8,25 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.2.128:8847
-        namespace: d12f0770-ceaa-4215-9355-63676d1abeee
-  #      config:
-#        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-#        namespace: d12f0770-ceaa-4215-9355-63676d1abeee
-#        file-extension: yml
+        server-addr: localhost:8848
+        namespace: a0bb43a8-b44d-492d-92db-06873e6fbc78
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        file-extension: yml
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.2.129:8337/system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://localhost:3306/system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: root
-
-swagger:
-  enabled: true
-
 
 logging:
   level:
     org.origami: debug
+
+swagger:
+  enabled: true
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
