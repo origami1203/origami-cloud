@@ -3,13 +3,11 @@ package org.origami.common.core.utils;
 import cn.hutool.core.lang.Assert;
 import lombok.experimental.UtilityClass;
 import org.origami.common.core.exception.base.BaseException;
-import org.springframework.util.StopWatch;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -46,6 +44,14 @@ public class DateUtil {
         }
 
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    /**
+     * @param date Date
+     * @return yyyy-MM-dd HH:mm:ss格式化date
+     */
+    public String format(Date date) {
+        return format(date, "yyyy-MM-dd HH:mm:ss");
     }
 
     /**
