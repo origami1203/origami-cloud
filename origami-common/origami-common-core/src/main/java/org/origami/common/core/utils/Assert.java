@@ -12,6 +12,16 @@ import org.origami.common.core.exception.IllegalParamException;
  */
 @UtilityClass
 public class Assert {
+    
+    /**
+     * 断言对象不能为空
+     *
+     * @param object 被断言对象
+     */
+    public void nonNull(Object object) {
+        nonNull(object, "对象不能为空");
+    }
+    
     /**
      * 断言对象不能为空
      *
@@ -23,7 +33,7 @@ public class Assert {
             throw new IllegalParamException(message);
         }
     }
-
+    
     /**
      * 断言对象为空
      *
@@ -35,7 +45,7 @@ public class Assert {
             throw new IllegalParamException(message);
         }
     }
-
+    
     /**
      * 断言为true
      *
