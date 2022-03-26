@@ -1,12 +1,15 @@
 package org.origami.common.core.utils;
 
 import cn.hutool.core.lang.Assert;
-import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.origami.common.core.exception.base.BaseException;
+import org.springframework.util.StopWatch;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -68,14 +71,19 @@ public class DateUtil {
      * @param format  格式化字符串
      * @return 无法解析会抛出异常
      */
-    @SneakyThrows
     public Date parse(String dateStr, String format) {
         Assert.notNull(format, "formatter不能为空");
         Assert.notNull(dateStr, "dateStr不能为空");
 
         SimpleDateFormat sdf = new SimpleDateFormat(format);
 
-        return sdf.parse(dateStr);
+        Date date;
+        try {
+            date = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            throw new BaseException("日期解析错误");
+        }
+        return date;
     }
 
     /**
