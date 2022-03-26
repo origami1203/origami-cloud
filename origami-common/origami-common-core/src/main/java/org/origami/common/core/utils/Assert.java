@@ -23,7 +23,19 @@ public class Assert {
             throw new IllegalParamException(message);
         }
     }
-    
+
+    /**
+     * 断言对象为空
+     *
+     * @param object  被断言对象
+     * @param message 出现异常时展示的异常信息
+     */
+    public void isNull(Object object, String message) {
+        if (object != null) {
+            throw new IllegalParamException(message);
+        }
+    }
+
     /**
      * 断言为true
      *
