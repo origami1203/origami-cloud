@@ -8,18 +8,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
-        namespace: a0bb43a8-b44d-492d-92db-06873e6fbc78
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        namespace: ${spring.cloud.nacos.discovery.namespace}
-        file-extension: yml
+        server-addr: 124.223.160.191:8848
+        namespace: 1b06950d-586a-421d-b024-b3dbf132a3c2
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
-    username: root
-    password: root
+    url: jdbc:mysql://124.223.160.191:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: admin
+    password: 123456
 
 logging:
   level:

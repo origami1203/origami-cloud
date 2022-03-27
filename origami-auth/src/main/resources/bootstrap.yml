@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 10086
 
 spring:
   application:
@@ -8,15 +8,23 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
-        namespace: a0bb43a8-b44d-492d-92db-06873e6fbc78
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        file-extension: yml
-        namespace: ${spring.cloud.nacos.discovery.namespace}
+        server-addr: 124.223.160.191:8848
+        namespace: 1b06950d-586a-421d-b024-b3dbf132a3c2
 
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/auth?useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+
+swagger:
+  enabled: true
+
+feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+
+logging:
+  level:
+    org.origami: debug

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://124.223.160.191:3306/test?useSSL=false
+    username: root
+    password: root
+    hikari:
+      pool-name: hikari
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          client-id: client_admin
+          client-secret: 123456
+          introspection-uri: http://localhost:10086/oauth/check_token
