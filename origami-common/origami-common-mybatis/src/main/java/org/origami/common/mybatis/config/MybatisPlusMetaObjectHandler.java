@@ -17,21 +17,22 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.debug("mybatis-plus自动插入字段...");
-        
+
         LocalDateTime now = LocalDateTime.now();
-        
+
         strictInsertFill(metaObject, "createDate", LocalDateTime.class, now);
         strictInsertFill(metaObject, "updateDate", LocalDateTime.class, now);
         strictInsertFill(metaObject, "createBy", String.class, UserContextUtil.getUsername());
         strictInsertFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
+        strictInsertFill(metaObject, "deleted", Boolean.class, Boolean.FALSE);
     }
-    
+
     @Override
     public void updateFill(MetaObject metaObject) {
         log.debug("mybatis-plus自动更新字段开始...");
-        
+
         strictUpdateFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
         strictUpdateFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
     }
-    
+
 }
