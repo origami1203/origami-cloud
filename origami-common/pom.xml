@@ -15,6 +15,7 @@
         <module>origami-common-core</module>
         <module>origami-common-jpa</module>
         <module>origami-common-boot-swagger</module>
+        <module>origami-common-security</module>
     </modules>
 
     <artifactId>origami-common</artifactId>
