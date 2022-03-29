@@ -22,47 +22,41 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    
+
     @ExceptionHandler(Exception.class)
     public Result<Void> exception(Exception e) {
+        log.error("", e);
         return Result.failed(e.getMessage());
     }
-    
+
     @ExceptionHandler({ConstraintViolationException.class,
-                       ServletRequestBindingException.class,
-                       BindException.class})
+            ServletRequestBindingException.class,
+            BindException.class})
     public Result<Void> validationException(Exception e) {
         Result<Void> result = new Result<>();
-        
+
         if (e instanceof ConstraintViolationException) {
             ConstraintViolationException ex =
                     (ConstraintViolationException) e;
-            
+
             return result.setMsg(ex.getConstraintViolations()
-                                   .stream()
-                                   .map(ConstraintViolation::getMessage)
-                                   .collect(Collectors.joining(";")));
+                                         .stream()
+                                         .map(ConstraintViolation::getMessage)
+                                         .collect(Collectors.joining(";")));
         }
-        
+
         if (e instanceof BindException) {
             BindException ex =
                     (BindException) e;
-            
+
             return result.setMsg(ex.getAllErrors()
-                                   .stream()
-                                   .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                                   .collect(Collectors.joining(";")));
+                                         .stream()
+                                         .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                         .collect(Collectors.joining(";")));
         }
-    
-        // if (e instanceof ServletRequestBindingException) {
-        //     ServletRequestBindingException ex =
-        //             (ServletRequestBindingException) e;
-        //
-        // }
-    
         return result;
     }
-    
+
     @ExceptionHandler(BaseException.class)
     public Result<Void> baseException(BaseException e) {
         return Result.failed(e.getCode(), e.getMessage());
