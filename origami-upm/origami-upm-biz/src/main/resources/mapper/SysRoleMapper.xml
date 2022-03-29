@@ -30,4 +30,13 @@
                      left join sys_user on sys_user.id = sys_user_role.user_id
         where sys_user.id = #{userId}
     </select>
+
+    <select id="selectRolesByPermission" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from sys_role
+        left join sys_role_permission srp on srp.role_id = sys_role.id
+        left join sys_permission sp on srp.permission_id = sp.id
+        where sp.perms = #{permission}
+    </select>
+
 </mapper>
