@@ -8,31 +8,33 @@ import org.origami.common.core.utils.UserContextUtil;
 import java.time.LocalDateTime;
 
 /**
+ * 配置用于自动填充{@link org.origami.common.core.data.entity.BaseEntity}中的数据
+ *
  * @author origami1203
  * @date 2021/12/29 18:32
- * 配置用于自动填充{@link org.origami.common.mybatis.entity.BaseEntity}中的数据
  */
 @Slf4j
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.debug("mybatis-plus自动插入字段...");
-
+        
         LocalDateTime now = LocalDateTime.now();
-
+        
         strictInsertFill(metaObject, "createDate", LocalDateTime.class, now);
         strictInsertFill(metaObject, "updateDate", LocalDateTime.class, now);
         strictInsertFill(metaObject, "createBy", String.class, UserContextUtil.getUsername());
         strictInsertFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
         strictInsertFill(metaObject, "deleted", Boolean.class, Boolean.FALSE);
+        strictInsertFill(metaObject, "version", Long.class, 0L);
     }
-
+    
     @Override
     public void updateFill(MetaObject metaObject) {
         log.debug("mybatis-plus自动更新字段开始...");
-
+        
         strictUpdateFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
         strictUpdateFill(metaObject, "updateBy", String.class, UserContextUtil.getUsername());
     }
-
+    
 }
