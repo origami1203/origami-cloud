@@ -61,7 +61,7 @@ public class PageImpl<T> implements Page<T>, Serializable {
     
     @Override
     public long getOffset() {
-        return (current - 1) - size;
+        return (long) current * size;
     }
     
     @Override

@@ -1,14 +1,20 @@
-package org.origami.common.core.data.condition;
+package org.origami.common.core.data.query;
 
 import java.util.Map;
 
 /**
- * 数据库条件查询接口
+ * 查询条件
  *
  * @author origami
  * @date 2022/1/4 20:35
  */
 public interface Condition<T> {
+    
+    /**
+     * 获取原始条件bean
+     * @return T
+     */
+    T getCondition();
     
     
     /**
