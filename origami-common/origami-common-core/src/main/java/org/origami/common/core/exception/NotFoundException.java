@@ -1,6 +1,6 @@
 package org.origami.common.core.exception;
 
-import org.origami.common.core.base.Code;
+import org.origami.common.core.base.CodeEnum;
 import org.origami.common.core.exception.base.BaseException;
 
 /**
@@ -10,16 +10,16 @@ import org.origami.common.core.exception.base.BaseException;
  * @version 1.0.0
  * @date 2021-12-30 13:45
  */
-public class NotFindException extends BaseException {
+public class NotFoundException extends BaseException {
 
     private static final long serialVersionUID = -683097078247553918L;
 
-    public NotFindException() {
-        super(Code.RESOURCE_NOT_FOUND);
+    public NotFoundException() {
+        super(CodeEnum.RESOURCE_NOT_FOUND);
     }
 
 
-    public NotFindException(String message) {
-        super(Code.RESOURCE_NOT_FOUND.getCode(), message);
+    public NotFoundException(String message) {
+        super(CodeEnum.RESOURCE_NOT_FOUND.getCode(), message);
     }
 }

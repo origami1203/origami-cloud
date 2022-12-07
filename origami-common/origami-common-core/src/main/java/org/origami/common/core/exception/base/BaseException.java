@@ -1,7 +1,7 @@
 package org.origami.common.core.exception.base;
 
 import lombok.Getter;
-import org.origami.common.core.base.Code;
+import org.origami.common.core.base.CodeEnum;
 
 /**
  * 基类Exception
@@ -25,15 +25,15 @@ public class BaseException extends RuntimeException {
     private final String message;
 
     public BaseException() {
-        this(Code.ERROR);
+        this(CodeEnum.ERROR);
     }
 
     public BaseException(String message) {
-        this(Code.ERROR.getCode(), message);
+        this(CodeEnum.ERROR.getCode(), message);
     }
 
 
-    public BaseException(Code code) {
+    public BaseException(CodeEnum code) {
         this(code.getCode(), code.getMessage());
     }
 
