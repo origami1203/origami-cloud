@@ -14,7 +14,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.origami.common.core.exception.ParseException;
 
@@ -32,8 +31,7 @@ import java.util.List;
  * @date 2022-01-04 10:38
  */
 @Slf4j
-@UtilityClass
-public class JacksonUtil {
+public abstract class JacksonUtil {
     private static final String DEFAULT_DATE_TIME_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String DEFAULT_DATE_FORMAT_PATTERN = "yyyy-MM-dd";
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -68,7 +66,12 @@ public class JacksonUtil {
 
         MAPPER.registerModules(javaTimeModule, simpleModule);
     }
-
+    
+    private JacksonUtil() {
+        throw new UnsupportedOperationException(
+                "This is a utility class and cannot be instantiated");
+    }
+    
     /**
      * 获取mapper
      *
@@ -85,7 +88,7 @@ public class JacksonUtil {
      * @param src bean
      * @return 对象不能为空，解析失败抛异常
      */
-    public String toJson(Object src) {
+    public static String toJson(Object src) {
 
         Assert.nonNull(src);
 
@@ -104,7 +107,7 @@ public class JacksonUtil {
      * @param bean bean
      * @return 美化的json
      */
-    public String toJsonPretty(Object bean) {
+    public static String toJsonPretty(Object bean) {
 
         Assert.nonNull(bean);
 
@@ -126,7 +129,7 @@ public class JacksonUtil {
      * @param <T>      类型
      * @return bean实例
      */
-    public <T> T fromJson(String json, Class<T> beanType) {
+    public static <T> T fromJson(String json, Class<T> beanType) {
 
         Assert.nonNull(json, "json字符串不能为null");
         Assert.nonNull(beanType, "bean类型不能为null");
@@ -147,7 +150,7 @@ public class JacksonUtil {
      * @param <T>      泛型
      * @return 泛型list实例
      */
-    public <T> List<T> listFromJson(String json, Class<T> beanType) {
+    public static <T> List<T> listFromJson(String json, Class<T> beanType) {
 
         Assert.nonNull(json, "json字符串不能为null");
         Assert.nonNull(beanType, "bean类型不能为null");
@@ -174,7 +177,7 @@ public class JacksonUtil {
      * @param <T>         泛型
      * @return 泛型list实例
      */
-    public <T> T genericsFromJson(String json, TypeReference<T> beanTypeRef) {
+    public static <T> T genericsFromJson(String json, TypeReference<T> beanTypeRef) {
 
         Assert.nonNull(json, "json字符串不能为null");
         Assert.nonNull(beanTypeRef, "bean泛型类型不能为null");

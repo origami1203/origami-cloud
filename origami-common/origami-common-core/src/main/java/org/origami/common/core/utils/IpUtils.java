@@ -1,7 +1,5 @@
 package org.origami.common.core.utils;
 
-import lombok.experimental.UtilityClass;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -11,10 +9,14 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0.0
  * @date 2021-12-30 18:26
  */
-@UtilityClass
-public class IpUtils {
+public abstract class IpUtils {
     
-    private final String UNKNOWN = "unknown";
+    private static final String UNKNOWN = "unknown";
+    
+    private IpUtils() {
+        throw new UnsupportedOperationException(
+                "This is a utility class and cannot be instantiated");
+    }
     
     /**
      * 获取真实ip
@@ -22,7 +24,7 @@ public class IpUtils {
      * @param request 请求
      * @return ip地址
      */
-    public String getIpAddress(HttpServletRequest request) {
+    public static String getIpAddress(HttpServletRequest request) {
         if (request == null) {
             return UNKNOWN;
         }

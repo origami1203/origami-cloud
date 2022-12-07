@@ -1,7 +1,6 @@
 package org.origami.common.core.utils;
 
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -14,57 +13,59 @@ import javax.annotation.PostConstruct;
  * @date 2022/1/11 19:46
  */
 @Slf4j
-@UtilityClass
-public class SnowflakeUtil {
+public abstract class SnowflakeUtil {
     
     /**
      * 起始时间戳，2022-01-01 19:28:00
      */
-    private final long twepoch = 1641036480000L;
+    private static final long twepoch = 1641036480000L;
     /**
      * 每个部分所占的比特位数
      */
-    private final long workerIdBits = 5L;
-    private final long datacenterIdBits = 5L;
-    private final long sequenceBits = 12L;
+    private static final long workerIdBits = 5L;
+    private static final long datacenterIdBits = 5L;
+    private static final long sequenceBits = 12L;
     /**
      * 每一部分的最大值,31,31,4095
      */
-    private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
-    private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
-    private final long maxSequence = -1L ^ (-1L << sequenceBits);
+    private static final long maxWorkerId = -1L ^ (-1L << workerIdBits);
+    private static final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+    private static final long maxSequence = -1L ^ (-1L << sequenceBits);
     /**
      * 每一部分向左的位移
      */
-    private final long workerIdShift = sequenceBits;
-    private final long datacenterIdShift = sequenceBits + workerIdBits;
-    private final long timestampShift = sequenceBits + workerIdBits + datacenterIdBits;
+    private static final long workerIdShift = sequenceBits;
+    private static final long datacenterIdShift = sequenceBits + workerIdBits;
+    private static final long timestampShift = sequenceBits + workerIdBits + datacenterIdBits;
     
     /**
      * 数据中心ID
      */
-    @Value("${snowflake.data-center-id:1}")
-    private long datacenterId = 1;
+    private static long datacenterId = 1;
     
     /**
      * 机器id
      */
-    @Value("${snowflake.worker-id:0}")
-    private long workerId = 1;
+    private static long workerId = 1;
     /**
      * 序列号
      */
-    private long sequence = 0L;
+    private static long sequence = 0L;
     /**
      * 上次的时间戳
      */
-    private long lastTimestamp = -1L;
+    private static long lastTimestamp = -1L;
+    
+    private SnowflakeUtil() {
+        throw new UnsupportedOperationException(
+                "This is a utility class and cannot be instantiated");
+    }
     
     /**
      * 校验机房id和机器id
      */
     @PostConstruct
-    public void init() {
+    public static void init() {
         String msg;
         if (workerId > maxWorkerId || workerId < 0) {
             msg = String.format("worker Id can't be greater than %d or less than 0",
@@ -79,7 +80,7 @@ public class SnowflakeUtil {
     }
     
     @SneakyThrows
-    public synchronized long nextId() {
+    public static synchronized long nextId() {
         long timestamp = timeGen();
         // 机器时间回退，报错
         if (timestamp < lastTimestamp) {
@@ -103,7 +104,7 @@ public class SnowflakeUtil {
                | sequence; // 序列号部分
     }
     
-    private long tilNextMillis() {
+    private static long tilNextMillis() {
         long timestamp = timeGen();
         while (timestamp <= lastTimestamp) {
             timestamp = timeGen();
@@ -111,7 +112,7 @@ public class SnowflakeUtil {
         return timestamp;
     }
     
-    private long timeGen() {
+    private static long timeGen() {
         return System.currentTimeMillis();
     }
 }

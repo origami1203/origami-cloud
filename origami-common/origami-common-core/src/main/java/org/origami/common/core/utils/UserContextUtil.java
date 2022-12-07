@@ -1,6 +1,5 @@
 package org.origami.common.core.utils;
 
-import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -12,16 +11,20 @@ import java.util.Objects;
  * @author origami
  * @date 2021/12/30 22:34
  */
-@UtilityClass
-public class UserContextUtil {
+public abstract class UserContextUtil {
     
-    public String getUsername() {
+    private UserContextUtil() {
+        throw new UnsupportedOperationException(
+                "This is a utility class and cannot be instantiated");
+    }
+    
+    public static String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return Objects.nonNull(authentication) ? authentication.getName() : "anonymous";
     }
     
     // TODO
-    public Long getUserId() {
+    public static Long getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return null;
     }

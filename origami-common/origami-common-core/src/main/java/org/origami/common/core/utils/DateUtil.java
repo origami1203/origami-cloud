@@ -1,7 +1,6 @@
 package org.origami.common.core.utils;
 
 import cn.hutool.core.lang.Assert;
-import lombok.experimental.UtilityClass;
 import org.origami.common.core.exception.base.BaseException;
 
 import java.text.ParseException;
@@ -16,15 +15,20 @@ import java.util.Objects;
  * @version 1.0.0
  * @date 2021-12-30 12:20
  */
-@UtilityClass
-public class DateUtil {
+public abstract class DateUtil {
+    
+    private DateUtil() {
+        throw new UnsupportedOperationException(
+                "This is a utility class and cannot be instantiated");
+    }
+    
     /**
      * LocalDateTime转Date
      *
      * @param localDateTime LocalDateTime
      * @return Date
      */
-    public Date localDateTime2Date(LocalDateTime localDateTime) {
+    public static Date localDateTime2Date(LocalDateTime localDateTime) {
         if (Objects.isNull(localDateTime)) {
             return null;
         }
@@ -38,7 +42,7 @@ public class DateUtil {
      * @param date Date
      * @return LocalDateTime
      */
-    public LocalDateTime date2LocalDateTime(Date date) {
+    public static LocalDateTime date2LocalDateTime(Date date) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -50,7 +54,7 @@ public class DateUtil {
      * @param date Date
      * @return yyyy-MM-dd HH:mm:ss格式化date
      */
-    public String format(Date date) {
+    public static String format(Date date) {
         return format(date, "yyyy-MM-dd HH:mm:ss");
     }
 
@@ -59,7 +63,7 @@ public class DateUtil {
      * @param format 格式化字符串
      * @return 如果date是null, 返回null
      */
-    public String format(Date date, String format) {
+    public static String format(Date date, String format) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -77,7 +81,7 @@ public class DateUtil {
      * @param format  格式化字符串
      * @return 无法解析会抛出异常
      */
-    public Date parse(String dateStr, String format) {
+    public static Date parse(String dateStr, String format) {
         Assert.notNull(format, "formatter不能为空");
         Assert.notNull(dateStr, "dateStr不能为空");
 
@@ -103,7 +107,12 @@ public class DateUtil {
      * @param second     秒
      * @return date
      */
-    public Date of(int year, int month, int dayOfMonth, int hour, int minute, int second) {
+    public static Date of(int year,
+                          int month,
+                          int dayOfMonth,
+                          int hour,
+                          int minute,
+                          int second) {
         LocalDateTime localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);
         return localDateTime2Date(localDateTime);
     }
@@ -114,7 +123,7 @@ public class DateUtil {
      * @param dayOfMonth 日
      * @return 时分秒默认为null
      */
-    public Date of(int year, int month, int dayOfMonth) {
+    public static Date of(int year, int month, int dayOfMonth) {
         LocalDateTime localDateTime = LocalDateTime.of(year, month, dayOfMonth, 0, 0, 0);
         return localDateTime2Date(localDateTime);
     }
