@@ -1,10 +1,9 @@
 package org.origami.common.core.data.query.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.origami.common.core.data.query.Order;
 import org.origami.common.core.data.query.Query;
+import org.origami.common.core.utils.BeanUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +26,11 @@ public class QueryImpl<T> implements Query<T> {
      * 排序
      */
     protected final List<Order> sort;
-    private static final List UNSORTED = Collections.EMPTY_LIST;
+    private static final List<Order> UNSORTED = Collections.emptyList();
+    
+    public QueryImpl() {
+        this(null, null);
+    }
     
     public QueryImpl(T condition, List<Order> sort) {
         this.condition = condition;
@@ -40,9 +43,9 @@ public class QueryImpl<T> implements Query<T> {
     
     @Override
     public Map<String, Object> getConditionMap() {
-        return this.condition == null ? Collections.emptyMap() : BeanUtil.beanToMap(condition,
-                                                                                    true,
-                                                                                    true);
+        return this.condition == null ? Collections.emptyMap() : BeanUtils.beanToMap(condition,
+                                                                                     false,
+                                                                                     true);
     }
     
     
