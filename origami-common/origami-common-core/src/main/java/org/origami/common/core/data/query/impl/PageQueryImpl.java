@@ -1,8 +1,6 @@
 package org.origami.common.core.data.query.impl;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.origami.common.core.data.query.Order;
 import org.origami.common.core.data.query.PageQuery;
@@ -26,8 +24,8 @@ public class PageQueryImpl<T> extends QueryImpl<T> implements PageQuery<T> {
      * 页码
      */
     @ApiModelProperty(value = "页码")
-    
     private final int pageNum;
+    
     /**
      * 每页大小
      */
