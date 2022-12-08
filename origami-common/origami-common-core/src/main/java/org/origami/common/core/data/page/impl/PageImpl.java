@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 实现类
+ * Page的默认实现类
  *
  * @author origami
  * @date 2022/1/17 21:40
@@ -21,31 +21,35 @@ import java.util.stream.Collectors;
 public class PageImpl<T> implements Page<T>, Serializable {
     private static final long serialVersionUID = 8095392548687879321L;
     
-    private final int current;
-    private final int size;
+    private final int pageNum;
+    private final int pageSize;
     private final long total;
     private final List<T> content = new ArrayList<>();
     
-    public PageImpl(int current, int size, long total, List<T> content) {
-        Assert.isTrue(current > 0, "当前页不能小于1");
-        Assert.isTrue(size > 0, "每页数量不能小于1");
+    private PageImpl(int pageNum, int pageSize, long total, List<T> content) {
+        Assert.isTrue(pageNum > 0, "当前页不能小于1");
+        Assert.isTrue(pageSize > 0, "每页数量不能小于1");
         Assert.nonNull(content, "列表不能为空");
-        this.current = current;
-        this.size = size;
+        
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
         this.total = total;
         this.content.addAll(content);
     }
     
+    public static <T> PageImpl<T> of(int pageNum, int pageSize, long total, List<T> content) {
+        return new PageImpl<>(pageNum, pageSize, total, content);
+    }
     
     @Override
-    public int getSize() {
-        return this.size;
+    public int getPageSize() {
+        return this.pageSize;
     }
     
     
     @Override
-    public int getCurrent() {
-        return this.current;
+    public int getPageNum() {
+        return this.pageNum;
     }
     
     
@@ -59,19 +63,10 @@ public class PageImpl<T> implements Page<T>, Serializable {
         return this.total;
     }
     
-    @Override
-    public long getOffset() {
-        return (long) current * size;
-    }
-    
-    @Override
-    public boolean hasContent() {
-        return !content.isEmpty();
-    }
     
     @Override
     public <U> Page<U> map(Function<? super T, ? extends U> converter) {
-        return new PageImpl<>(current, size, total, getConvertedContent(converter));
+        return of(pageNum, pageSize, total, getConvertedContent(converter));
     }
     
     private <U> List<U> getConvertedContent(Function<? super T, ? extends U> converter) {

@@ -14,14 +14,19 @@ public interface Page<T> {
     /**
      * 获取页面大小
      */
-    int getSize();
+    int getPageSize();
     
     /**
      * 当前页码
      */
-    int getCurrent();
+    int getPageNum();
     
     
+    /**
+     * 获取数据内容
+     *
+     * @return {@code List<T>}
+     */
     List<T> getContent();
     
     /**
@@ -30,30 +35,20 @@ public interface Page<T> {
     long getTotal();
     
     /**
-     * 获取偏移量
-     */
-    long getOffset();
-    
-    /**
-     * 是否有内容
-     */
-    boolean hasContent();
-    
-    /**
      * 总页数
      *
      * @return 总页码
      */
     default int getTotalPages() {
-        return getSize() == 0 ? 1 : (int) Math.ceil((double) getTotal() / (double) getSize());
+        return getPageSize() == 0 ? 1 : (int) Math.ceil((double) getTotal() / (double) getPageSize());
     }
     
     /**
-     * 转换
+     * 类型转换
      *
      * @param converter 转换函数
      * @param <U>       转换后类型
-     * @return 转换后分页
+     * @return 转换后分页数据
      */
     <U> Page<U> map(Function<? super T, ? extends U> converter);
 }
