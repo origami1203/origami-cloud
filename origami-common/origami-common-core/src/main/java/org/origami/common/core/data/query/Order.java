@@ -17,7 +17,7 @@ public class Order implements Serializable {
     private static final long serialVersionUID = -1569885036804250205L;
     
     // 字段名
-    private String column;
+    private String property;
     // 排序方向
     private Direction direction;
     
@@ -29,6 +29,25 @@ public class Order implements Serializable {
         /**
          * 降序
          */
-        DESC
+        DESC;
+        
+        /**
+         * 是否升序
+         *
+         * @return boolean
+         */
+        public boolean isAscending() {
+            return this.equals(ASC);
+        }
+    
+        /**
+         * 是否降序
+         *
+         * @return boolean
+         */
+        public boolean isDescending() {
+            return this.equals(DESC);
+        }
     }
+    
 }
