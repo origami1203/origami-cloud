@@ -34,11 +34,29 @@
         <!--spring-cloud-starter-security和spring-security-oauth2-autoconfigure过时弃用
         认证服务器使用此依赖
         其他oauth2相关已经整合到spring-security5.x中-->
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.cloud</groupId>-->
+        <!--    <artifactId>spring-cloud-starter-oauth2</artifactId>-->
+        <!--    <version>2.2.5.RELEASE</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+            <version>2.2.5.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
             <version>2.2.5.RELEASE</version>
         </dependency>
+
+
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.security.oauth.boot</groupId>-->
+        <!--    <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
+        <!--</dependency>-->
 
         <!--数据库读取client及token保存等-->
         <dependency>
@@ -53,6 +71,12 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->
         <!--    <artifactId>spring-boot-starter-security</artifactId>-->
@@ -66,6 +90,13 @@
         <dependency>
             <groupId>org.origami</groupId>
             <artifactId>origami-spring-webmvc</artifactId>
+        </dependency>
+
+        <!--jwt操作库-->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>9.25.6</version>
         </dependency>
 
 
@@ -88,6 +119,12 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
+        </dependency>
+
+        <!--用于自定义登录界面和授权界面-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
 

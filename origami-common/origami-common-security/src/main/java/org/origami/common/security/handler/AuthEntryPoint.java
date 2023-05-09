@@ -1,7 +1,7 @@
 package org.origami.common.security.handler;
 
-import org.origami.common.core.base.Code;
-import org.origami.common.core.base.Result;
+import org.origami.common.core.base.CodeEnum;
+import org.origami.common.core.base.R;
 import org.origami.common.core.utils.JacksonUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -27,6 +27,6 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json;charset=utf-8");
 
         PrintWriter out = response.getWriter();
-        out.write(JacksonUtil.toJson(Result.failed(Code.USER_NOT_LOGIN)));
+        out.write(JacksonUtil.toJson(R.failed(CodeEnum.USER_NOT_LOGIN)));
     }
 }

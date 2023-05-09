@@ -7,6 +7,8 @@ import org.origami.common.jpa.repository.BaseRepository;
 import org.origami.common.jpa.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
+
 /**
  * @author origami
  * @date 2022/1/2 19:20
@@ -14,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class BaseServiceImpl<R extends BaseRepository<T>, T extends BaseEntity> implements
                                                                             BaseService<T> {
-    @Autowired
+    @Resource
     protected R baseRepository;
     
-    @Autowired
+    @Resource
     protected JPAQueryFactory jpaQuery;
     
     

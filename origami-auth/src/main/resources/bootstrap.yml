@@ -1,5 +1,5 @@
 server:
-  port: 10086
+  port: 10087
 
 spring:
   application:
@@ -8,8 +8,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 124.223.160.191:8848
-        namespace: 1b06950d-586a-421d-b024-b3dbf132a3c2
+        server-addr: localhost:8848
+        namespace: cbf8e5c4-3bde-4d96-a3cf-a2115edfe4ad
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
 
   profiles:
     active: dev
@@ -18,6 +21,7 @@ spring:
 
 swagger:
   enabled: true
+  base-package: org.origami
 
 feign:
   okhttp:

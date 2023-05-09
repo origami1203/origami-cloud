@@ -2,8 +2,8 @@ package org.origami.upm.manager.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.origami.upm.api.entity.SysPermission;
-import org.origami.upm.api.entity.SysRole;
-import org.origami.upm.manager.UpmManager;
+import org.origami.upm.api.entity.SysRoleDO;
+import org.origami.upm.manager.SysRoleManager;
 import org.origami.upm.mapper.SysPermissionMapper;
 import org.origami.upm.mapper.SysRoleMapper;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class UpmManagerImpl implements UpmManager {
+public class SysRoleManagerImpl implements SysRoleManager {
 
     private final SysRoleMapper sysRoleMapper;
     private final SysPermissionMapper sysPermissionMapper;
@@ -31,11 +31,28 @@ public class UpmManagerImpl implements UpmManager {
     public Map<String, Set<String>> getPermissionRoleMap() {
         Map<String, Set<String>> result = new HashMap<>();
 
-        List<SysRole> sysRoles = sysRoleMapper.selectList(null);
+        List<SysRoleDO> sysRoles = sysRoleMapper.selectList(null);
         List<SysPermission> permissions = sysPermissionMapper.selectList(null);
 
         permissions.forEach(it -> {
-            Set<String> roles = sysRoleMapper.selectRolesByPermission(it.getPerms()).stream().map(SysRole::getRoleCode).collect(Collectors.toSet());
+            Set<String> roles = sysRoleMapper.selectRolesByPermission(it.getPerms()).stream().map(
+                    SysRoleDO::getRoleCode).collect(Collectors.toSet());
+            result.put(it.getPerms(), roles);
+        });
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Set<String>> getRolePermissionMap() {
+        Map<String, Set<String>> result = new HashMap<>();
+
+        List<SysRoleDO> sysRoles = sysRoleMapper.selectList(null);
+        List<SysPermission> permissions = sysPermissionMapper.selectList(null);
+
+        permissions.forEach(it -> {
+            Set<String> roles = sysRoleMapper.selectRolesByPermission(it.getPerms()).stream().map(
+                    SysRoleDO::getRoleCode).collect(Collectors.toSet());
             result.put(it.getPerms(), roles);
         });
 

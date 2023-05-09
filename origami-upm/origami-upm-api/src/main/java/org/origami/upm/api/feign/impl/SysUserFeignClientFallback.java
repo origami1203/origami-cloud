@@ -1,51 +1,51 @@
 package org.origami.upm.api.feign.impl;
 
-import org.origami.common.core.base.Code;
-import org.origami.common.core.base.Result;
-import org.origami.common.core.data.page.Page;
-import org.origami.common.mybatis.condition.impl.PageQueryCondition;
-import org.origami.upm.api.dto.SysUserDTO;
-import org.origami.upm.api.entity.SysUser;
-import org.origami.upm.api.feign.SysUserFeignClient;
+import org.origami.common.core.base.CodeEnum;
+import org.origami.common.core.base.R;
+import org.origami.common.core.data.page.IPage;
+import org.origami.common.core.data.query.PageQuery;
+import org.origami.upm.api.dto.SysAuthUserDTO;
+import org.origami.upm.api.entity.SysUserDO;
+import org.origami.upm.api.feign.RemoteSysUserService;
 
 /**
  * @author yuanmenglong
  * @version 1.0.0
  * @date 2022-01-21 15:14
  */
-public class SysUserFeignClientFallback implements SysUserFeignClient {
+public class SysUserFeignClientFallback implements RemoteSysUserService {
     @Override
-    public Result<SysUser> add(SysUser user) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<SysUserDO> add(SysUserDO user) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 
     @Override
-    public Result<SysUser> getById(Long id) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<SysUserDO> getById(Long id) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 
     @Override
-    public Result<Void> deleteById(Long id) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<Void> deleteById(Long id) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 
     @Override
-    public Result<SysUser> update(SysUser sysUser) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<SysUserDO> update(SysUserDO sysUser) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 
     @Override
-    public Result<Page<SysUser>> page(PageQueryCondition<SysUser> page) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<IPage<SysUserDO>> page(PageQuery<SysUserDO> page) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 
     @Override
-    public Result<SysUser> getByUsername(String username) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<SysUserDO> getByUsername(String username) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 
     @Override
-    public Result<SysUserDTO> getAuthUserByUsername(String username) {
-        return Result.failed(Code.SYSTEM_FALLBACK);
+    public R<SysAuthUserDTO> getAuthUserByUsername(String username) {
+        return R.failed(CodeEnum.SYSTEM_FALLBACK);
     }
 }

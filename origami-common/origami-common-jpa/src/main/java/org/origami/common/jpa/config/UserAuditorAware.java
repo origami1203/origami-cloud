@@ -1,6 +1,6 @@
 package org.origami.common.jpa.config;
 
-import org.origami.common.core.utils.UserContextUtil;
+import org.origami.common.core.utils.UserContextHolder;
 import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class UserAuditorAware implements AuditorAware<String> {
     
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.ofNullable(UserContextUtil.getUsername());
+        return Optional.ofNullable(UserContextHolder.getUsername());
     }
     
 }

@@ -15,29 +15,33 @@
         <module>origami-common</module>
         <module>origami-upm</module>
         <module>origami-spring-webmvc</module>
+        <module>origami-admin</module>
         <module>origami-gateway</module>
     </modules>
 
     <properties>
         <origami-cloud.version>0.0.1-SNAPSHOT</origami-cloud.version>
 
-        <spring-boot.version>2.5.4</spring-boot.version>
+        <spring-boot.version>2.5.5</spring-boot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
 
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <hutool.version>5.7.17</hutool.version>
-        <guava.version>31.0.1-jre</guava.version>
+        <hutool.version>5.8.10</hutool.version>
+        <guava.version>31.1-jre</guava.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <mysql.version>5.1.38</mysql.version>
         <knife4j.version>3.0.3</knife4j.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
         <swagger.version>3.0.0</swagger.version>
-        <mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
+        <swagger-annotation.version>1.6.2</swagger-annotation.version>
         <feign-okhttp.version>11.8</feign-okhttp.version>
+
+        <jpa-spec.version>3.2.4</jpa-spec.version>
     </properties>
 
     <dependencies>
@@ -45,6 +49,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -59,11 +64,7 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--监控-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -114,6 +115,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>${spring-cloud-starter-oauth2.version}</version>
+            </dependency>
+
             <!--mysql-->
             <dependency>
                 <groupId>mysql</groupId>
@@ -129,11 +136,25 @@
             </dependency>
 
             <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotation.version}</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!--mybatis-plus相关版本依赖-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -144,6 +165,40 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!--配置文件处理器-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!--监控-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <!--测试依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.wenhao</groupId>
+                <artifactId>jpa-spec</artifactId>
+                <version>${jpa-spec.version}</version>
             </dependency>
 
             <!--内部版本管理-->
@@ -163,13 +218,6 @@
                 <groupId>org.origami</groupId>
                 <artifactId>origami-common-mybatis</artifactId>
                 <version>${origami-cloud.version}</version>
-            </dependency>
-
-            <!--用于mybatis自动建表-->
-            <dependency>
-                <groupId>com.gitee.sunchenbin.mybatis.actable</groupId>
-                <artifactId>mybatis-enhance-actable</artifactId>
-                <version>${mybatis-enhance-actable.version}</version>
             </dependency>
 
             <dependency>
@@ -199,6 +247,18 @@
             <dependency>
                 <groupId>org.origami</groupId>
                 <artifactId>origami-spring-webmvc</artifactId>
+                <version>${origami-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-common-security</artifactId>
+                <version>${origami-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.origami</groupId>
+                <artifactId>origami-admin</artifactId>
                 <version>${origami-cloud.version}</version>
             </dependency>
 

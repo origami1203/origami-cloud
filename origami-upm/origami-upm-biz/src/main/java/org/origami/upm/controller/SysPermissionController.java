@@ -4,13 +4,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.origami.common.core.base.Result;
-import org.origami.common.core.data.page.Page;
+import org.origami.common.core.base.R;
+import org.origami.common.core.data.page.IPage;
+import org.origami.common.core.data.query.PageQuery;
 import org.origami.common.core.exception.base.BaseException;
 import org.origami.common.log.annotation.SysLog;
-import org.origami.common.mybatis.condition.impl.PageQueryCondition;
 import org.origami.upm.api.entity.SysPermission;
 import org.origami.upm.service.SysPermissionService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,59 +34,60 @@ import java.util.Optional;
 @RequestMapping("/perms")
 @RequiredArgsConstructor
 public class SysPermissionController {
+
     private final SysPermissionService sysPermissionService;
-    
-    @ApiOperation("添加角色")
+
+    @ApiOperation("添加权限")
     @PostMapping("")
-    public Result<SysPermission> add(@RequestBody SysPermission perm) {
+    public R<SysPermission> add(@Validated @RequestBody SysPermission perm) {
         return Optional.ofNullable(perm)
-                       .map(s -> {
-                           sysPermissionService.save(s);
-                           return s;
-                       })
-                       .map(Result::ok)
-                       .orElseThrow(BaseException::new);
+                .map(s -> {
+                    sysPermissionService.save(s);
+                    return s;
+                })
+                .map(R::ok)
+                .orElseThrow(BaseException::new);
     }
-    
-    @ApiOperation("获取指定id用户")
+
+    @ApiOperation("获取指定id权限")
     @GetMapping("/{id}")
-    @ApiParam(value = "用户id", required = true)
-    public Result<Void> getById(@PathVariable("id") Long id) {
+    @ApiParam(value = "权限id", required = true)
+    public R<Void> getById(@PathVariable("id") Long id) {
         return Optional.ofNullable(id)
-                       .map(sysPermissionService::getById)
-                       .map(s -> Result.ok())
-                       .orElseThrow(BaseException::new);
+                .map(sysPermissionService::getById)
+                .map(s -> R.ok())
+                .orElseThrow(BaseException::new);
     }
-    
-    @ApiOperation("删除指定id用户")
+
+    @ApiOperation("删除指定id权限")
     @DeleteMapping("/{id}")
-    @ApiParam(value = "用户id", required = true)
-    public Result<Void> deleteById(@PathVariable("id") Long id) {
+    @ApiParam(value = "权限id", required = true)
+    public R<Boolean> deleteById(@PathVariable("id") Long id) {
         return Optional.ofNullable(id)
-                       .map(sysPermissionService::removeById)
-                       .map(s -> Result.ok())
-                       .orElseThrow(BaseException::new);
+                .map(sysPermissionService::removeById)
+                .map(R::ok)
+                .orElseThrow(BaseException::new);
     }
-    
-    @ApiOperation("更新用户")
+
+    @ApiOperation("更新权限内容")
     @PutMapping("")
-    public Result<SysPermission> update(@RequestBody SysPermission perm) {
+    public R<SysPermission> update(@RequestBody SysPermission perm) {
         return Optional.ofNullable(perm)
-                       .map(s -> {
-                           sysPermissionService.updateById(s);
-                           return s;
-                       })
-                       .map(Result::ok)
-                       .orElseThrow(BaseException::new);
+                .map(s -> {
+                    sysPermissionService.updateById(s);
+                    return s;
+                })
+                .map(R::ok)
+                .orElseThrow(BaseException::new);
     }
-    
+
     @SysLog
     @ApiOperation("分页")
     @GetMapping("")
-    public Result<Page<SysPermission>> page(PageQueryCondition<SysPermission> page) {
+    public R<IPage<SysPermission>> page(PageQuery<SysPermission> page) {
         return Optional.ofNullable(page)
-                       .map(s -> sysPermissionService.page(page))
-                       .map(Result::ok)
-                       .orElseThrow(BaseException::new);
+                .map(sysPermissionService::page)
+                .map(R::ok)
+                .orElseThrow(BaseException::new);
     }
 }

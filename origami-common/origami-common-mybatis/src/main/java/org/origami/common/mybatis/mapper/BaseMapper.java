@@ -1,7 +1,7 @@
 package org.origami.common.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.origami.common.core.data.entity.BaseEntity;
+import org.origami.common.mybatis.entity.BaseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

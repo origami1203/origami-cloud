@@ -1,5 +1,6 @@
 package org.origami.common.swagger.boot.config;
 
+import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -11,8 +12,13 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -33,19 +39,17 @@ import java.util.List;
 @EnableConfigurationProperties(SwaggerProperties.class)
 @ConditionalOnProperty(prefix = "swagger", name = "enabled", havingValue = "true")
 public class SwaggerConfig {
-
     /**
      * 默认的排除路径，排除Spring Boot默认的错误处理路径和端点
      */
     private static final List<String> DEFAULT_EXCLUDE_PATH =
             Arrays.asList("/error", "/actuator/**");
-
     private static final String BASE_PATH = "/**";
 
     @Bean
     public Docket api(SwaggerProperties properties) {
 
-        log.debug("开启swagger-ui");
+        log.info("开启swagger-ui");
 
         if (properties.getBasePath().isEmpty()) {
             properties.getBasePath().add(BASE_PATH);
@@ -59,9 +63,12 @@ public class SwaggerConfig {
 
         properties.getBasePath().stream().map(PathSelectors::ant).forEach(builder::paths);
         properties.getExcludePath()
-                .stream()
-                .map(excludePath -> PathSelectors.ant(excludePath).negate())
-                .forEach(builder::paths);
+                  .stream()
+                  .map(excludePath -> PathSelectors.ant(excludePath).negate())
+                  .forEach(builder::paths);
+
+        builder.build().securityContexts(Arrays.asList(securityContexts()))
+               .securitySchemes(Collections.singletonList(securitySchemes()));
 
         return builder.build();
     }
@@ -84,6 +91,29 @@ public class SwaggerConfig {
     @Bean
     public SwaggerWebMvcConfigurer swaggerUiConfigurer() {
         return new SwaggerWebMvcConfigurer();
+    }
+
+    @Bean
+    public SwaggerBannerConfig swaggerBannerConfig() {
+        return new SwaggerBannerConfig();
+    }
+
+    private SecurityScheme securitySchemes() {
+        return new ApiKey("Authorization", "Authorization", "header");
+    }
+
+    private SecurityContext securityContexts() {
+        return SecurityContext.builder()
+                              .securityReferences(defaultAuth())
+                              .forPaths(PathSelectors.any())
+                              .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("xxx", "描述信息");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
     }
 
 }

@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://124.223.160.191:3306/test?useSSL=false
+    url: jdbc:mysql://localhost:3306/system?useSSL=false
     username: root
     password: root
     hikari:
@@ -13,3 +13,12 @@ spring:
           client-id: client_admin
           client-secret: 123456
           introspection-uri: http://localhost:10086/oauth/check_token
+
+  freemarker:
+    cache: false
+    suffix: .ftl
+
+
+logging:
+  level:
+    org.springframework.security: debug

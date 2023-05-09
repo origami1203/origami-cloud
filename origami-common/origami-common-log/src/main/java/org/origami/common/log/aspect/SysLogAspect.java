@@ -11,7 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.origami.common.core.utils.JacksonUtil;
-import org.origami.common.core.utils.UserContextUtil;
+import org.origami.common.core.utils.UserContextHolder;
 import org.origami.common.log.base.SysLogInfo;
 import org.origami.common.log.service.SysLogInfoService;
 import org.origami.common.log.utils.SysLogInfoUtil;
@@ -50,8 +50,8 @@ public class SysLogAspect {
         
         
         SysLogInfo sysLogInfo = SysLogInfoUtil.getLogInfoFromServletRequest();
-        sysLogInfo.setOperatorId(UserContextUtil.getUserId())
-                  .setOperatorName(UserContextUtil.getUsername())
+        sysLogInfo.setOperatorId(UserContextHolder.getUserId())
+                  .setOperatorName(UserContextHolder.getUsername())
                   .setMethodDesc(getMethodDesc(method))
                   .setMethod(method.toString())
                   .setParams(JacksonUtil.toJson(pjp.getArgs()))
@@ -70,8 +70,12 @@ public class SysLogAspect {
             throw e;
         } finally {
             stopWatch.stop();
-            sysLogInfo.setTimeConsumed(stopWatch.getTotalTimeMillis())
-                      .setReturnValue(JacksonUtil.toJson(result));
+            sysLogInfo.setTimeConsumed(stopWatch.getTotalTimeMillis());
+            if (result == null) {
+                sysLogInfo.setReturnValue("null");
+            } else {
+                sysLogInfo.setReturnValue(JacksonUtil.toJson(result));
+            }
             // 接口，子类继承后
             sysLogInfoService.handle(sysLogInfo);
         }

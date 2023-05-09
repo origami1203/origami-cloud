@@ -1,6 +1,6 @@
 package org.origami.common.security.handler;
 
-import org.origami.common.core.base.Result;
+import org.origami.common.core.base.R;
 import org.origami.common.core.utils.JacksonUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -28,7 +28,7 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
 
         PrintWriter writer = response.getWriter();
         
-        writer.write(JacksonUtil.toJson(Result.failed("认证失败")));
+        writer.write(JacksonUtil.toJson(R.failed("认证失败")));
         
     }
 }

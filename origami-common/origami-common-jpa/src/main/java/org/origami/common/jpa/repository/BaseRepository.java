@@ -1,19 +1,20 @@
 package org.origami.common.jpa.repository;
 
-import org.origami.common.jpa.condition.impl.PageQueryCondition;
-import org.origami.common.jpa.condition.impl.QueryCondition;
+import org.origami.common.core.data.page.IPage;
+import org.origami.common.core.data.page.impl.PageImpl;
+import org.origami.common.core.data.query.PageQuery;
+import org.origami.common.core.data.query.Query;
+import org.origami.common.core.data.query.impl.PageQueryImpl;
+import org.origami.common.core.data.query.impl.QueryImpl;
 import org.origami.common.jpa.entity.BaseEntity;
 import org.origami.common.jpa.utils.SpecificationUtil;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,53 +27,67 @@ import java.util.Optional;
  * @date 2022/1/1 21:05
  */
 @NoRepositoryBean
-public interface BaseRepository<T extends BaseEntity> extends
-                                                      PagingAndSortingRepository<T, Long>,
-                                                      JpaSpecificationExecutor<T> {
+public interface BaseRepository<T extends BaseEntity> extends CrudRepository<T, Long>,
+                                                              JpaSpecificationExecutor<T> {
     
     /**
-     * 条件分页查询
+     * 分页查询
      *
-     * @param pageQuery
-     * @return
+     * @param pageQuery 页面查询
+     * @return {@code IPage<T>}
      */
-    default Page<T> page(PageQueryCondition<?> pageQuery) {
+    default IPage<T> page(PageQuery<T> pageQuery) {
+        
+        if (pageQuery == null) {
+            pageQuery = PageQueryImpl.of();
+        }
         
         Specification<T> spec = SpecificationUtil.getSpecification(pageQuery);
         
-        Sort sort = pageQuery.getSort();
-        Pageable page = PageRequest.of(pageQuery.getPageNum(), pageQuery.getPageSize(), sort);
+        PageRequest pageRequest = PageRequest.of(pageQuery.getPageNum(),
+                                                 pageQuery.getPageSize(),
+                                                 SpecificationUtil.getJpaSort(pageQuery.getSort()));
         
-        return findAll(spec, page);
+        
+        org.springframework.data.domain.Page<T> pages = findAll(spec, pageRequest);
+        
+        return PageImpl.of(pages.getNumber(),
+                           pages.getSize(),
+                           pages.getTotalElements(),
+                           pages.getContent());
     }
     
     /**
      * 条件查询list
      *
-     * @param condition
-     * @return
+     * @param query 条件
+     * @return {@code List<T>}
      */
-    default List<T> list(QueryCondition<?> condition) {
-        Specification<T> spec = SpecificationUtil.getSpecification(condition);
-        return findAll(spec, condition.getSort());
+    default List<T> list(Query<T> query) {
+        
+        if (query == null) {
+            query = QueryImpl.of();
+        }
+        
+        Specification<T> spec = SpecificationUtil.getSpecification(query);
+        
+        return findAll(spec, SpecificationUtil.getJpaSort(query.getSort()));
     }
     
-    default Long count(QueryCondition<?> condition) {
+    default Long count(Query<T> condition) {
         Specification<T> spec = SpecificationUtil.getSpecification(condition);
         return count(spec);
     }
     
     
     @Override
-    @Query(value = "select e from #{#entityName} e where e.deleted = false")
+    @org.springframework.data.jpa.repository.Query(value = "select e from #{#entityName} e where e.deleted = false")
     List<T> findAll();
     
-    @Override
-    @Query(value = "select e from #{#entityName} e where e.deleted = false order by ?1 ")
-    List<T> findAll(Sort sort);
     
     @Override
-    @Query(value = "select e from #{#entityName} e where e.deleted= false and e.id in ?1")
+    @org.springframework.data.jpa.repository.Query(value = "select e from #{#entityName} e " +
+                                                           "where e.id in ?1 and e.deleted= false")
     List<T> findAllById(Iterable<Long> longs);
     
     @Override
@@ -81,11 +96,12 @@ public interface BaseRepository<T extends BaseEntity> extends
     }
     
     @Override
-    default Optional<T> findById(Long aLong) {
-        return Optional.ofNullable(getById(aLong));
+    default Optional<T> findById(Long id) {
+        return Optional.ofNullable(getById(id));
     }
     
-    @Query(value = "select e from #{#entityName} e where e.deleted = false and e.id = ?1")
+    @org.springframework.data.jpa.repository.Query(value = "select e from #{#entityName} e " +
+                                                           "where e.id = ?1 and e.deleted = false")
     T getById(Long id);
     
     @Override
@@ -94,13 +110,15 @@ public interface BaseRepository<T extends BaseEntity> extends
     }
     
     @Override
-    @Query(value = "select count(e) from #{#entityName} e where e.deleted = false")
+    @org.springframework.data.jpa.repository.Query(value = "select count(e) from #{#entityName} e where e.deleted = false")
     long count();
     
     @Override
     @Modifying
-    @Query(value = "update #{#entityName} e set e.deleted = true where e.id = ?1")
-    void deleteById(Long aLong);
+    @org.springframework.data.jpa.repository.Query(value =
+            "update #{#entityName} e set e.deleted = true " +
+            "where e.id = ?1")
+    void deleteById(Long id);
     
     @Override
     default void delete(T entity) {
@@ -109,8 +127,8 @@ public interface BaseRepository<T extends BaseEntity> extends
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    default void deleteAllById(Iterable<? extends Long> longs) {
-        longs.forEach(this::deleteById);
+    default void deleteAllById(Iterable<? extends Long> ids) {
+        ids.forEach(this::deleteById);
     }
     
     @Override
@@ -122,7 +140,7 @@ public interface BaseRepository<T extends BaseEntity> extends
     @Override
     @Modifying
     @Transactional(rollbackFor = Exception.class)
-    @Query(value = "update #{#entityName} e set e.deleted = true")
+    @org.springframework.data.jpa.repository.Query(value = "update #{#entityName} e set e.deleted = true")
     void deleteAll();
     
 }

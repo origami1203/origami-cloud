@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Mapper
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
-    
+
     /**
      * 指定角色的权限
      */

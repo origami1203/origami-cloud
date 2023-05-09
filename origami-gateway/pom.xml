@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>origami-gateway</artifactId>
-    <description>网关服务</description>
+    <description>网关服务,统一鉴权</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,15 +18,18 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.origami</groupId>
+            <artifactId>origami-common-core</artifactId>
+        </dependency>
+
+        <!--SpringBoot2.4.x之后默认不加载bootstrap.yml文件，需要在pom里加上依赖,否则nacos报错-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -38,6 +41,12 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -46,6 +55,16 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-resource-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
 
     </dependencies>

@@ -1,7 +1,7 @@
 package org.origami.common.security.handler;
 
-import org.origami.common.core.base.Code;
-import org.origami.common.core.base.Result;
+import org.origami.common.core.base.CodeEnum;
+import org.origami.common.core.base.R;
 import org.origami.common.core.utils.JacksonUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -30,7 +30,7 @@ public class AuthAccessDeniedHandler implements AccessDeniedHandler {
 
         PrintWriter writer = response.getWriter();
         
-        writer.write(JacksonUtil.toJson(Result.failed(Code.NO_PERMISSION)));
+        writer.write(JacksonUtil.toJson(R.failed(CodeEnum.NO_PERMISSION)));
         
     }
 }

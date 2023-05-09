@@ -1,6 +1,7 @@
 package org.origami.common.jpa;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.origami.common.jpa.config.UserAuditorAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,17 +12,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * 自动配置类
+ * jpa自动配置类
  *
  * @author origami
  * @date 2022/1/2 9:50
  */
 @EnableJpaAuditing
+@RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 public class SpringDataJpaAutoConfiguration {
-    @Autowired
+    
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
     
     @Bean
     public UserAuditorAware userAuditorAware() {

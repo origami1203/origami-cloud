@@ -1,6 +1,6 @@
 package org.origami.common.security.handler;
 
-import org.origami.common.core.base.Result;
+import org.origami.common.core.base.R;
 import org.origami.common.core.utils.JacksonUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -28,6 +28,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
         PrintWriter writer = response.getWriter();
         
-        writer.write(JacksonUtil.toJson(Result.ok("认证成功")));
+        writer.write(JacksonUtil.toJson(R.ok("认证成功")));
     }
 }

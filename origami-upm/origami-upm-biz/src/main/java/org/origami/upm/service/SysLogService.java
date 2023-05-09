@@ -1,6 +1,6 @@
 package org.origami.upm.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import org.origami.common.mybatis.service.BaseService;
 import org.origami.upm.api.entity.SysLog;
 
 /**
@@ -10,5 +10,5 @@ import org.origami.upm.api.entity.SysLog;
  * @version 1.0.0
  * @date 2021-12-31 10:04
  */
-public interface SysLogService extends IService<SysLog> {
+public interface SysLogService extends BaseService<SysLog> {
 }

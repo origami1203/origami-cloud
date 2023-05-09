@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.origami.common.mybatis.entity.BaseEntity;
 
+
 /**
  * 角色实体类
  *
@@ -15,14 +16,14 @@ import org.origami.common.mybatis.entity.BaseEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(description = "角色实体类")
-public class SysRole extends BaseEntity {
-    
+public class SysRoleDO extends BaseEntity {
+
     @ApiModelProperty(value = "角色名称", example = "管理员")
     private String roleName;
-    
+
     @ApiModelProperty(value = "角色标识", example = "ADMIN")
     private String roleCode;
-    
+
     @ApiModelProperty(value = "备注")
     private String remark;
 }
