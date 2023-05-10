@@ -14,13 +14,14 @@ import java.util.List;
  */
 public interface BaseMapper<T extends BaseEntity> extends
                                                   com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
-    
+
     /**
      * 批量插入
      *
-     * @return int
+     * @param list 列表
+     * @return 影响的条数
      */
     @Transactional(rollbackFor = Exception.class)
     int insertBatchSomeColumn(@Param("list") List<T> list);
-    
+
 }
