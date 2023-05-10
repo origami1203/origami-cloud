@@ -18,11 +18,11 @@ public class BaseException extends RuntimeException {
     /**
      * 状态码
      */
-    private final String code;
+    protected final String code;
     /**
      * 提示信息
      */
-    private final String message;
+    protected final String message;
 
     public BaseException() {
         this(CodeEnum.ERROR);
