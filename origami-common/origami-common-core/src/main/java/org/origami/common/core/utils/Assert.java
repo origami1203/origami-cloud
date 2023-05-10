@@ -72,7 +72,7 @@ public abstract class Assert {
      * @param collection 集合
      * @param message    错误提示信息
      */
-    public static void isNotEmpty(Collection<?> collection, String message) {
+    public static void notEmpty(Collection<?> collection, String message) {
         if (CollUtil.isEmpty(collection)) {
             throw new IllegalParamException(message);
         }
@@ -84,7 +84,7 @@ public abstract class Assert {
      * @param map     map
      * @param message 错误提示信息
      */
-    public static void isNotEmpty(Map<?, ?> map, String message) {
+    public static void notEmpty(Map<?, ?> map, String message) {
         if (MapUtil.isEmpty(map)) {
             throw new IllegalParamException(message);
         }
