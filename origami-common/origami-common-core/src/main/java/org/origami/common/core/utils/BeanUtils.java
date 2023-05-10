@@ -6,7 +6,7 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import java.util.Map;
 
 /**
- * BeanUtils工具类,封装了hutool的BeanUtil工具类
+ * BeanUtils工具类,封装了hutool的BeanUtil工具类作为防腐层
  *
  * @author origami
  * @version 1.0.0
@@ -14,12 +14,12 @@ import java.util.Map;
  * @see BeanUtil
  */
 public abstract class BeanUtils {
-    
+
     private BeanUtils() {
         throw new UnsupportedOperationException(
                 "This is a utility class and cannot be instantiated");
     }
-    
+
     /**
      * 复制属性
      *
@@ -29,11 +29,11 @@ public abstract class BeanUtils {
      * @return {@code T}
      */
     public static <T> T copyProperties(Object source,
-                                       Class<T> clazz,
-                                       String... ignoreProperties) {
+            Class<T> clazz,
+            String... ignoreProperties) {
         return BeanUtil.copyProperties(source, clazz, ignoreProperties);
     }
-    
+
     /**
      * 复制属性
      *
@@ -42,12 +42,12 @@ public abstract class BeanUtils {
      * @param ignoreProperties 要忽略属性的字段名的列表
      */
     public static void copyProperties(Object source,
-                                      Object target,
-                                      String... ignoreProperties) {
+            Object target,
+            String... ignoreProperties) {
         BeanUtil.copyProperties(source, target, ignoreProperties);
     }
-    
-    
+
+
     /**
      * bean转map
      *
@@ -57,7 +57,7 @@ public abstract class BeanUtils {
     public static Map<String, Object> beanToMap(Object bean) {
         return beanToMap(bean, false, false);
     }
-    
+
     /**
      * bean转map
      *
@@ -67,13 +67,13 @@ public abstract class BeanUtils {
      * @return bean为null会抛出异常
      */
     public static Map<String, Object> beanToMap(Object bean,
-                                                boolean camelToUnderscore,
-                                                boolean ignoreNullValue) {
+            boolean camelToUnderscore,
+            boolean ignoreNullValue) {
         Assert.nonNull(bean, "bean不能为空");
-        
+
         return BeanUtil.beanToMap(bean, camelToUnderscore, ignoreNullValue);
     }
-    
+
     /**
      * map转bean
      *
@@ -83,10 +83,10 @@ public abstract class BeanUtils {
      * @return {@code T}
      */
     public static <T> T mapToBean(Map<?, ?> map,
-                                  Class<T> beanClass,
-                                  String... ignoreProperties) {
+            Class<T> beanClass,
+            String... ignoreProperties) {
         return BeanUtil.mapToBean(map, beanClass, false,
-                                  CopyOptions.create().setIgnoreProperties(ignoreProperties));
+                CopyOptions.create().setIgnoreProperties(ignoreProperties));
     }
-    
+
 }
