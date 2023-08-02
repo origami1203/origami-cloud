@@ -10,13 +10,17 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>origami-common-mybatis</module>
+        <module>origami-mybatis-plus-boot-starter</module>
         <module>origami-common-log</module>
         <module>origami-common-core</module>
         <module>origami-common-jpa</module>
         <module>origami-common-boot-swagger</module>
-        <module>origami-common-security</module>
+        <module>origami-spring-boot-starter-security</module>
         <module>origami-common-cache</module>
+        <module>origami-spring-boot-starter-redis</module>
+        <module>origami-spring-boot-starter-captcha</module>
+        <module>origami-spring-boot-starter-sms</module>
+      <module>origami-table-creator</module>
     </modules>
 
     <artifactId>origami-common</artifactId>

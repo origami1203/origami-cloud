@@ -1,5 +1,6 @@
 package org.origami.common.core.exception;
 
+import org.origami.common.core.base.CodeEnum;
 import org.origami.common.core.exception.base.BaseException;
 
 /**
@@ -10,13 +11,17 @@ import org.origami.common.core.exception.base.BaseException;
  * @date 2022-01-12 10:19
  */
 public class IllegalParamException extends BaseException {
-
+    
     public IllegalParamException() {
         super("非法参数异常");
     }
-
+    
     public IllegalParamException(String message) {
-        super(message);
+        super(CodeEnum.REQUEST_PARAM_ERROR.getCode(), message);
     }
-
+    
+    public IllegalParamException(String code, String message) {
+        super(code, message);
+    }
+    
 }

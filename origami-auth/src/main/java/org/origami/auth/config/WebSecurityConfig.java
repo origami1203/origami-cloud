@@ -5,7 +5,7 @@ import org.origami.auth.handler.AuthAccessDeniedHandler;
 import org.origami.auth.handler.AuthEntryPoint;
 import org.origami.auth.handler.AuthFailureHandler;
 import org.origami.auth.handler.success.SimpleAbstractTokenAuthSuccessHandler;
-import org.origami.upm.api.feign.RemoteSysUserService;
+import org.origami.system.api.service.RemoteSysUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,9 +29,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
     private final RemoteSysUserService remoteSysUserService;
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
     }
-    
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v3/api-docs",
                         "/webjars/**");
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
@@ -73,42 +73,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .withUser("ls").password(passwordEncoder().encode("1234"))
             .roles("USER");
     }
-    
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-    
+
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return new SimpleAbstractTokenAuthSuccessHandler();
     }
-    
+
     @Bean
     public AuthenticationFailureHandler failureHandler() {
         return new AuthFailureHandler();
     }
-    
+
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new AuthEntryPoint();
     }
-    
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new AuthAccessDeniedHandler();
     }
-    
+
     // @Bean
     // @Override
     // public UserDetailsService userDetailsService() {
     //     return new MemberDetailsService(remoteSysUserService);
     // }
-    
+
 }

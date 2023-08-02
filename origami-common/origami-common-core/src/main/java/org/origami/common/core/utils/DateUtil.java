@@ -1,8 +1,5 @@
 package org.origami.common.core.utils;
 
-import cn.hutool.core.lang.Assert;
-import org.origami.common.core.exception.base.BaseException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -16,19 +13,21 @@ import java.util.Objects;
  * @date 2021-12-30 12:20
  */
 public abstract class DateUtil {
-    
+
+    private static final String DEFAULT_FORMAT_STR = "yyyy-MM-dd HH:mm:ss";
+
     private DateUtil() {
         throw new UnsupportedOperationException(
                 "This is a utility class and cannot be instantiated");
     }
-    
+
     /**
      * LocalDateTime转Date
      *
      * @param localDateTime LocalDateTime
-     * @return Date
+     * @return 若localDataTime为null，返回null
      */
-    public static Date localDateTime2Date(LocalDateTime localDateTime) {
+    public static Date localDateTimeToDate(LocalDateTime localDateTime) {
         if (Objects.isNull(localDateTime)) {
             return null;
         }
@@ -40,9 +39,9 @@ public abstract class DateUtil {
      * LocalDateTime转Date
      *
      * @param date Date
-     * @return LocalDateTime
+     * @return 若date为null，则返回null
      */
-    public static LocalDateTime date2LocalDateTime(Date date) {
+    public static LocalDateTime dateToLocalDateTime(Date date) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -52,10 +51,10 @@ public abstract class DateUtil {
 
     /**
      * @param date Date
-     * @return yyyy-MM-dd HH:mm:ss格式化date
+     * @return 以yyyy-MM-dd HH:mm:ss格式化date
      */
     public static String format(Date date) {
-        return format(date, "yyyy-MM-dd HH:mm:ss");
+        return format(date, DEFAULT_FORMAT_STR);
     }
 
     /**
@@ -67,7 +66,7 @@ public abstract class DateUtil {
         if (Objects.isNull(date)) {
             return null;
         }
-        Assert.notNull(format, "formatter不能为空");
+        Assert.nonNull(format, "formatter不能为空");
 
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
@@ -82,8 +81,8 @@ public abstract class DateUtil {
      * @return 无法解析会抛出异常
      */
     public static Date parse(String dateStr, String format) {
-        Assert.notNull(format, "formatter不能为空");
-        Assert.notNull(dateStr, "dateStr不能为空");
+        Assert.nonNull(format, "formatter不能为空");
+        Assert.nonNull(dateStr, "dateStr不能为空");
 
         SimpleDateFormat sdf = new SimpleDateFormat(format);
 
@@ -91,7 +90,7 @@ public abstract class DateUtil {
         try {
             date = sdf.parse(dateStr);
         } catch (ParseException e) {
-            throw new BaseException("日期解析错误");
+            throw new org.origami.common.core.exception.ParseException("日期解析错误");
         }
         return date;
     }
@@ -107,25 +106,21 @@ public abstract class DateUtil {
      * @param second     秒
      * @return date
      */
-    public static Date of(int year,
-                          int month,
-                          int dayOfMonth,
-                          int hour,
-                          int minute,
-                          int second) {
-        LocalDateTime localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);
-        return localDateTime2Date(localDateTime);
+    public static Date of(int year, int month, int dayOfMonth, int hour, int minute, int second) {
+        LocalDateTime localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minute,
+                second);
+        return localDateTimeToDate(localDateTime);
     }
 
     /**
      * @param year       年
      * @param month      月
      * @param dayOfMonth 日
-     * @return 时分秒默认为null
+     * @return 时分秒为0
      */
     public static Date of(int year, int month, int dayOfMonth) {
         LocalDateTime localDateTime = LocalDateTime.of(year, month, dayOfMonth, 0, 0, 0);
-        return localDateTime2Date(localDateTime);
+        return localDateTimeToDate(localDateTime);
     }
 
 }

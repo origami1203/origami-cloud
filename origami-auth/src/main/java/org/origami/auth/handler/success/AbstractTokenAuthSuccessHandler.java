@@ -1,7 +1,7 @@
 package org.origami.auth.handler.success;
 
 import org.origami.common.core.base.R;
-import org.origami.common.core.utils.JacksonUtil;
+import org.origami.common.core.utils.JsonUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -28,13 +28,13 @@ public abstract class AbstractTokenAuthSuccessHandler implements AuthenticationS
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        
+
         PrintWriter writer = response.getWriter();
         String token = generateAndHandleToken(authentication);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
-        writer.write(JacksonUtil.toJson(R.ok("登陆成功", tokenMap)));
+        writer.write(JsonUtil.toJson(R.ok("登陆成功", tokenMap)));
     }
-    
+
     public abstract String generateAndHandleToken(Authentication auth);
 }

@@ -3,7 +3,7 @@ package org.origami.auth.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.origami.common.core.base.CodeEnum;
 import org.origami.common.core.base.R;
-import org.origami.common.core.utils.JacksonUtil;
+import org.origami.common.core.utils.JsonUtil;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
@@ -31,19 +31,19 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
         log.debug("登录失败: {}", exception.getMessage());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        
+
         PrintWriter writer = response.getWriter();
-        
+
         if (exception instanceof BadCredentialsException) {
-            writer.write(JacksonUtil.toJson(R.failed(CodeEnum.USER_BAD_CREDENTIALS)));
+            writer.write(JsonUtil.toJson(R.failed(CodeEnum.USER_BAD_CREDENTIALS)));
             return;
         }
         if (exception instanceof DisabledException) {
-            writer.write(JacksonUtil.toJson(R.failed(CodeEnum.USER_ACCOUNT_DISABLED)));
+            writer.write(JsonUtil.toJson(R.failed(CodeEnum.USER_ACCOUNT_DISABLED)));
             return;
         }
-        writer.write(JacksonUtil.toJson(R.failed("登录失败")));
-        
-        
+        writer.write(JsonUtil.toJson(R.failed("登录失败")));
+
+
     }
 }

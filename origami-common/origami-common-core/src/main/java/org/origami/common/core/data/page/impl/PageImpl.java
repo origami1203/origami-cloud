@@ -1,7 +1,7 @@
 package org.origami.common.core.data.page.impl;
 
 import lombok.Data;
-import org.origami.common.core.data.page.Page;
+import org.origami.common.core.data.page.IPage;
 import org.origami.common.core.utils.Assert;
 
 import java.io.Serializable;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @date 2022/1/17 21:40
  */
 @Data
-public class PageImpl<T> implements Page<T>, Serializable {
+public class PageImpl<T> implements IPage<T>, Serializable {
     private static final long serialVersionUID = 8095392548687879321L;
     
     private final int pageNum;
@@ -65,7 +65,7 @@ public class PageImpl<T> implements Page<T>, Serializable {
     
     
     @Override
-    public <U> Page<U> map(Function<? super T, ? extends U> converter) {
+    public <U> IPage<U> map(Function<? super T, ? extends U> converter) {
         return of(pageNum, pageSize, total, getConvertedContent(converter));
     }
     

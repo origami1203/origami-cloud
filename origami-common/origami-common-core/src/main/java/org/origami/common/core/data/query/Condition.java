@@ -9,18 +9,19 @@ import java.util.Map;
  * @date 2022/1/4 20:35
  */
 public interface Condition<T> {
-    
+
     /**
      * 获取原始条件bean
+     *
      * @return T
      */
     T getCondition();
-    
-    
+
+
     /**
      * 获取条件，key为字段名，value为对应的值
      *
-     * @return map
+     * @return {@code Map<String, Object>}
      */
     Map<String, Object> getConditionMap();
 }

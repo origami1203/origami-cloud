@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Getter
 public class QueryImpl<T> implements Query<T> {
-    
+
     /**
      * 查询条件，不为null的字段将使用and组合查询
      */
@@ -27,26 +27,29 @@ public class QueryImpl<T> implements Query<T> {
      */
     protected final List<Order> sort;
     private static final List<Order> UNSORTED = Collections.emptyList();
-    
-    public QueryImpl() {
-        this(null, null);
-    }
-    
-    public QueryImpl(T condition, List<Order> sort) {
+
+    QueryImpl(T condition, List<Order> sort) {
         this.condition = condition;
         if (sort == null) {
             sort = UNSORTED;
         }
         this.sort = sort;
     }
-    
-    
+
+
     @Override
     public Map<String, Object> getConditionMap() {
-        return this.condition == null ? Collections.emptyMap() : BeanUtils.beanToMap(condition,
-                                                                                     false,
-                                                                                     true);
+        return this.condition == null ? Collections.emptyMap()
+                : BeanUtils.beanToMap(condition, false, false);
     }
-    
-    
+
+    public static <T> QueryImpl<T> of() {
+        return new QueryImpl<>(null, null);
+    }
+
+    public static <T> QueryImpl<T> of(T condition, List<Order> sort) {
+        return new QueryImpl<>(condition, sort);
+    }
+
+
 }

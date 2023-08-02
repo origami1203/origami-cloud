@@ -1,6 +1,7 @@
 package org.origami.common.jpa.config;
 
-import org.origami.common.core.utils.UserContextHolder;
+import lombok.NonNull;
+import org.origami.common.core.utils.CurrentUserHolder;
 import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
@@ -12,10 +13,10 @@ import java.util.Optional;
  * @date 2022/1/3 12:57
  */
 public class UserAuditorAware implements AuditorAware<String> {
-    
+
     @Override
-    public Optional<String> getCurrentAuditor() {
-        return Optional.ofNullable(UserContextHolder.getUsername());
+    public @NonNull Optional<String> getCurrentAuditor() {
+        return Optional.ofNullable(CurrentUserHolder.getUsername());
     }
-    
+
 }

@@ -1,14 +1,16 @@
 package org.origami.common.jpa.service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import org.origami.common.core.data.page.IPage;
-import org.origami.common.core.data.query.PageQuery;
-import org.origami.common.core.data.query.Query;
+import org.origami.common.core.data.query.PageModel;
+import org.origami.common.core.data.query.QueryModel;
+import org.origami.common.core.exception.NotFoundException;
+import org.origami.common.core.utils.Assert;
 import org.origami.common.jpa.entity.BaseEntity;
 import org.origami.common.jpa.repository.BaseRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * service基类，参照mybatis-plus的IService
@@ -31,7 +33,7 @@ public interface BaseService<T extends BaseEntity> {
      * @param condition 条件
      * @return {@code IPage<T>}
      */
-    default IPage<T> page(PageQuery<T> condition) {
+    default IPage<T> page(PageModel<T> condition) {
         return getBaseRepository().page(condition);
     }
 
@@ -90,6 +92,13 @@ public interface BaseService<T extends BaseEntity> {
      * @param entity 实体对象
      */
     default T update(T entity) {
+        Assert.nonNull(entity, "更新的实体类不能为null");
+        Assert.nonNull(entity.getId(), "更新的实体类id不能为null");
+
+        T dbEntity = Optional.ofNullable(getById(entity.getId()))
+                .orElseThrow(() -> new NotFoundException("更新对象不存在"));
+        entity.setVersion(dbEntity.getVersion());
+
         return getBaseRepository().save(entity);
     }
 
@@ -134,15 +143,15 @@ public interface BaseService<T extends BaseEntity> {
     /**
      * 根据 Wrapper 条件，查询总记录数
      */
-    default long count(Query<T> condition) {
-        return getBaseRepository().count(condition);
+    default long count(QueryModel<T> queryModel) {
+        return getBaseRepository().count(queryModel);
     }
 
     /**
      * 查询列表
      */
-    default List<T> list(Query<T> condition) {
-        return getBaseRepository().list(condition);
+    default List<T> list(QueryModel<T> queryModel) {
+        return getBaseRepository().list(queryModel);
     }
 
     /**

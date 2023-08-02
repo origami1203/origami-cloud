@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
  */
 @Slf4j
 public abstract class SnowflakeUtil {
-    
+
     /**
      * 起始时间戳，2022-01-01 19:28:00
      */
@@ -36,12 +36,12 @@ public abstract class SnowflakeUtil {
     private static final long workerIdShift = sequenceBits;
     private static final long datacenterIdShift = sequenceBits + workerIdBits;
     private static final long timestampShift = sequenceBits + workerIdBits + datacenterIdBits;
-    
+
     /**
      * 数据中心ID
      */
     private static long datacenterId = 1;
-    
+
     /**
      * 机器id
      */
@@ -54,12 +54,12 @@ public abstract class SnowflakeUtil {
      * 上次的时间戳
      */
     private static long lastTimestamp = -1L;
-    
+
     private SnowflakeUtil() {
         throw new UnsupportedOperationException(
                 "This is a utility class and cannot be instantiated");
     }
-    
+
     /**
      * 校验机房id和机器id
      */
@@ -68,22 +68,22 @@ public abstract class SnowflakeUtil {
         String msg;
         if (workerId > maxWorkerId || workerId < 0) {
             msg = String.format("worker Id can't be greater than %d or less than 0",
-                                maxWorkerId);
+                    maxWorkerId);
             log.error(msg);
         }
         if (datacenterId > maxDatacenterId || datacenterId < 0) {
             msg = String.format("datacenter Id can't be greater than %d or less than 0",
-                                maxDatacenterId);
+                    maxDatacenterId);
             log.error(msg);
         }
     }
-    
+
     @SneakyThrows
     public static synchronized long nextId() {
         long timestamp = timeGen();
         // 机器时间回退，报错
         if (timestamp < lastTimestamp) {
-            throw new Exception(String.format(
+            throw new RuntimeException(String.format(
                     "Clock moved backwards.  Refusing to generate id for %d milliseconds",
                     lastTimestamp - timestamp));
         }
@@ -96,13 +96,13 @@ public abstract class SnowflakeUtil {
             }
         }
         lastTimestamp = timestamp;
-        
+
         return (timestamp - twepoch) << timestampShift // 时间戳部分
-               | datacenterId << datacenterIdShift // 数据中心部分
-               | workerId << workerIdShift // 机器标识部分
-               | sequence; // 序列号部分
+                | datacenterId << datacenterIdShift // 数据中心部分
+                | workerId << workerIdShift // 机器标识部分
+                | sequence; // 序列号部分
     }
-    
+
     private static long tilNextMillis() {
         long timestamp = timeGen();
         while (timestamp <= lastTimestamp) {
@@ -110,7 +110,7 @@ public abstract class SnowflakeUtil {
         }
         return timestamp;
     }
-    
+
     private static long timeGen() {
         return System.currentTimeMillis();
     }

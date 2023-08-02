@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * 排序
+ *
  * @author origami
  * @date 2022/4/12 0:02
  */
@@ -14,14 +16,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order implements Serializable {
+
     private static final long serialVersionUID = -1569885036804250205L;
-    
-    // 字段名
+
+    /**
+     * 字段名
+     */
     private String property;
-    // 排序方向
+    /**
+     * 字段的排序方向
+     */
     private Direction direction;
-    
-    public static enum Direction {
+
+    public enum Direction {
         /**
          * 升序
          */
@@ -30,7 +37,7 @@ public class Order implements Serializable {
          * 降序
          */
         DESC;
-        
+
         /**
          * 是否升序
          *
@@ -39,15 +46,15 @@ public class Order implements Serializable {
         public boolean isAscending() {
             return this.equals(ASC);
         }
-    
+
         /**
          * 是否降序
          *
          * @return boolean
          */
         public boolean isDescending() {
-            return this.equals(DESC);
+            return !isAscending();
         }
     }
-    
+
 }

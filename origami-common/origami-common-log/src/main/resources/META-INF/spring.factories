@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.origami.common.log.SysLogAutoConfiguration
+  org.origami.common.log.OperationLogAutoConfiguration
