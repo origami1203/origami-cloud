@@ -6,18 +6,16 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
-
-import java.io.Serializable;
-
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDateTime;
-
 import lombok.experimental.FieldNameConstants;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
+ * 通用实体类
+ *
  * @author origami
  * @date 2022/1/5 18:28
  */
